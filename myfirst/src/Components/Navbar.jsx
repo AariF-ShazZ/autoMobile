@@ -28,9 +28,13 @@ import {
     FormControl,
     FormLabel,
     ModalFooter,
+    Heading,
+    InputRightElement,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon,SearchIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons'
 import { AllRoutes } from "../AllRoutes/AllRoutes"
+import {HiShoppingCart} from "react-icons/hi"
+import {BsFillHeartFill} from "react-icons/bs"
 
 interface Props {
     children: React.ReactNode
@@ -59,10 +63,14 @@ const NavLink = (props: Props) => {
 
 export default function Simple() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [isTrue,setIsTrue]=useState(false)
+    const [isTrue, setIsTrue] = useState(false)
+    const iconStyle = {
+        fontSize: '25px',
+        marginRight: '30px',
+      };
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Box bg={useColorModeValue('#ffffff', '#fff')} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     {/* <IconButton
                         size={'md'}
@@ -71,27 +79,32 @@ export default function Simple() {
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
                     /> */}
-                    
-                        <Box display={{lg:"none"}}>
-                                {
-                                     isTrue?<InitialFocus/>:<SearchIcon onClick={() =>setIsTrue(!isTrue)  } color='gray.300' />
-                                }
-                        </Box>
-                       
-                    
+
+                    <Box display={{ lg: "none" }}>
+                        {
+                            isTrue ? <InitialFocus /> : <SearchIcon onClick={() => setIsTrue(!isTrue)} color='gray.300' />
+                        }
+                    </Box>
+
+
                     {/* <SearchIcon color='gray.300'/> */}
-                    <HStack spacing={8} alignItems={'center'}>
-                        <Box>AutoMo</Box>
-                        <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
+                    <HStack spacing={14} alignItems={'center'} w={"auto"}>
+                        <Box> <Heading textAlign={"left"} color={"red"}>AutoMo</Heading></Box>
+                        <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }} alignContent={"center"} justifyContent={"center"}>
                             <InputGroup>
-                                <InputLeftElement pointerEvents='none'>
-                                    <SearchIcon color='gray.300' />
+                                <InputLeftElement pointerEvents='none' display={"flex"} alignContent={"center"} justifyContent={"center"}>
+                                    <SearchIcon color='gray.300' mt={"10px"} fontSize={"20px"} />
                                 </InputLeftElement>
-                                <Input type='text' placeholder='Search something here' />
+                                <Input type='text' placeholder='Search something here' size={"lg"} w={"600px"} />
+                                {/* <InputRightElement pointerEvents='none'  display={"flex"} alignContent={"center"} justifyContent={"center"}>
+                                    <Button colorScheme='messenger' w={"200px"} m={"15px"} cursor={"pointer"}>Search</Button>
+                                </InputRightElement> */}
                             </InputGroup>
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
+                        <BsFillHeartFill style={iconStyle}/>
+                        <HiShoppingCart  style={iconStyle}/>
                         <Menu>
                             <MenuButton
                                 as={Button}
@@ -127,50 +140,50 @@ export default function Simple() {
                 ) : null} */}
             </Box>
 
-            <Box p={4}> <AllRoutes/></Box>
+            <Box p={4}> <AllRoutes /></Box>
         </>
     )
 }
 
 function InitialFocus() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-  
+
     const initialRef = useRef(null)
     const finalRef = useRef(null)
-  
+
     return (
-      <>
-        <Button onClick={onOpen}>Close</Button>
-        <Modal
-          initialFocusRef={initialRef}
-          finalFocusRef={finalRef}
-          isOpen={isOpen}
-          onClose={onClose}
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create your account</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>First name</FormLabel>
-                <Input ref={initialRef} placeholder='First name' />
-              </FormControl>
-  
-              <FormControl mt={4}>
-                <FormLabel>Last name</FormLabel>
-                <Input placeholder='Last name' />
-              </FormControl>
-            </ModalBody>
-  
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3}>
-                Save
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
+        <>
+            <Button onClick={onOpen}>Close</Button>
+            <Modal
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Create your account</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <FormControl>
+                            <FormLabel>First name</FormLabel>
+                            <Input ref={initialRef} placeholder='First name' />
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel>Last name</FormLabel>
+                            <Input placeholder='Last name' />
+                        </FormControl>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme='blue' mr={3}>
+                            Save
+                        </Button>
+                        <Button onClick={onClose}>Cancel</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
     )
-  }
+}

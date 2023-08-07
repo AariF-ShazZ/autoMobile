@@ -7,12 +7,14 @@ import Home from '../Pages/Home';
 import Details from '../Pages/Details';
 import Cart from '../Pages/Cart';
 import Success from '../Pages/Success';
+import Product from '../Pages/Product';
 export const AllRoutes = () => {
   return (
     <>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/details' element={<Details/>}/>
+        <Route path='/products' element={<Product/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/success' element={<Success/>}/>
       </Routes>

@@ -47,7 +47,7 @@ export default function LargeWithLogoLeft() {
           <Stack spacing={6}>
             <Box>
               {/* <Logo color={useColorModeValue('gray.700', 'white')} /> */}
-              <Heading>AutoMo</Heading>
+              <Heading textAlign={"left"} color={"red"}>AutoMo</Heading>
             </Box>
             <Text fontSize={'sm'} textAlign={'left'}>Our vision is to provide convenience
 and help increase your sales business.</Text>
