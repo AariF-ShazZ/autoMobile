@@ -33,8 +33,9 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons'
 import { AllRoutes } from "../AllRoutes/AllRoutes"
-import {HiShoppingCart} from "react-icons/hi"
-import {BsFillHeartFill} from "react-icons/bs"
+import { HiShoppingCart } from "react-icons/hi"
+import { BsFillHeartFill } from "react-icons/bs"
+import { Link } from "react-router-dom"
 
 interface Props {
     children: React.ReactNode
@@ -67,7 +68,7 @@ export default function Simple() {
     const iconStyle = {
         fontSize: '25px',
         marginRight: '30px',
-      };
+    };
     return (
         <>
             <Box bg={useColorModeValue('#ffffff', '#fff')} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>
@@ -89,22 +90,39 @@ export default function Simple() {
 
                     {/* <SearchIcon color='gray.300'/> */}
                     <HStack spacing={14} alignItems={'center'} w={"auto"}>
-                        <Box> <Heading textAlign={"left"} color={"red"}>AutoMo</Heading></Box>
+                        <Box> <Heading textAlign={"left"} color={"red"}><Link to={"/"}>AutoMo</Link></Heading></Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }} alignContent={"center"} justifyContent={"center"}>
                             <InputGroup>
                                 <InputLeftElement pointerEvents='none' display={"flex"} alignContent={"center"} justifyContent={"center"}>
                                     <SearchIcon color='gray.300' mt={"10px"} fontSize={"20px"} />
                                 </InputLeftElement>
-                                <Input type='text' placeholder='Search something here' size={"lg"} w={"600px"} />
+                                <Input
+                                    type='text'
+                                    isInvalid
+                                    errorBorderColor="crimson"
+                                    placeholder="Search something here"
+                                    _placeholder={{
+                                        color: "gray.500", // You can use any Chakra UI color token
+                                      }}
+                                    size={"lg"} w={"600px"}
+                                    // display={{base:"none",}}
+                                />
                                 {/* <InputRightElement pointerEvents='none'  display={"flex"} alignContent={"center"} justifyContent={"center"}>
                                     <Button colorScheme='messenger' w={"200px"} m={"15px"} cursor={"pointer"}>Search</Button>
                                 </InputRightElement> */}
                             </InputGroup>
                         </HStack>
                     </HStack>
-                    <Flex alignItems={'center'}>
-                        <BsFillHeartFill style={iconStyle}/>
-                        <HiShoppingCart  style={iconStyle}/>
+                    <Flex w="14%" alignItems={'center'} justifyContent={"space-between"} >
+                        <Flex w={"70%"} bg={""} alignItems={'center'} justifyContent={"space-between"} display={['none', 'none', 'flex']}>
+                            <Box bg={"red"} p={"10%"} borderRadius={"50%"}>
+                                <BsFillHeartFill color="black" fontSize={"20px"} />
+                            </Box>
+                            <Box bg={"red"} p={"10%"} borderRadius={"50%"}>
+                                <HiShoppingCart color="black" fontSize={"23px"} />
+                            </Box>
+                        </Flex>
+
                         <Menu>
                             <MenuButton
                                 as={Button}
