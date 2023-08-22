@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { getProducts } from '../Redux/actions'
+import { getProducts } from '../Redux/productReducer/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../Components/Card';
 import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';

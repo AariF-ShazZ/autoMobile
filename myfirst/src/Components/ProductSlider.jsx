@@ -68,9 +68,12 @@ export const MultipleItems = () => {
         prevArrow={<PrevArrow className="slick-prev" />}
       >
         {products.map((x, i) => {
-          return (
-            <Card data={x}/>
-          );
+          if(i<10){
+            return (
+              <Card data={x}/>
+            )
+          }
+         
         })}
       </Slider>
     </div>

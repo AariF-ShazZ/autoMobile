@@ -30,8 +30,18 @@ import {
     ModalFooter,
     Heading,
     InputRightElement,
+    Textarea,
+    DrawerFooter,
+    Select,
+    DrawerHeader,
+    DrawerCloseButton,
+    DrawerOverlay,
+    DrawerBody,
+    InputLeftAddon,
+    InputRightAddon,
+    DrawerContent,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon, SearchIcon, AddIcon } from '@chakra-ui/icons'
 import { AllRoutes } from "../AllRoutes/AllRoutes"
 import { HiShoppingCart } from "react-icons/hi"
 import { BsFillHeartFill } from "react-icons/bs"
@@ -73,22 +83,11 @@ export default function Simple() {
         <>
             <Box bg={useColorModeValue('#ffffff', '#fff')} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                    {/* <IconButton
-                        size={'md'}
-                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                        aria-label={'Open Menu'}
-                        display={{ md: 'none' }}
-                        onClick={isOpen ? onClose : onOpen}
-                    /> */}
-
                     <Box display={{ lg: "none" }}>
                         {
                             isTrue ? <InitialFocus /> : <SearchIcon onClick={() => setIsTrue(!isTrue)} color='gray.300' />
                         }
                     </Box>
-
-
-                    {/* <SearchIcon color='gray.300'/> */}
                     <HStack spacing={14} alignItems={'center'} w={"auto"}>
                         <Box> <Heading textAlign={"left"} color={"red"}><Link to={"/"}>AutoMo</Link></Heading></Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }} alignContent={"center"} justifyContent={"center"}>
@@ -107,9 +106,6 @@ export default function Simple() {
                                     size={"lg"} w={"600px"}
                                     // display={{base:"none",}}
                                 />
-                                {/* <InputRightElement pointerEvents='none'  display={"flex"} alignContent={"center"} justifyContent={"center"}>
-                                    <Button colorScheme='messenger' w={"200px"} m={"15px"} cursor={"pointer"}>Search</Button>
-                                </InputRightElement> */}
                             </InputGroup>
                         </HStack>
                     </HStack>
@@ -119,7 +115,10 @@ export default function Simple() {
                                 <BsFillHeartFill color="black" fontSize={"20px"} />
                             </Box>
                             <Box bg={"red"} p={"10%"} borderRadius={"50%"}>
-                                <HiShoppingCart color="black" fontSize={"23px"} />
+                              <Link to={"/cart"}>
+                                <HiShoppingCart color="black" fontSize={"23px"}/>
+                              </Link>
+                        
                             </Box>
                         </Flex>
 
@@ -146,16 +145,6 @@ export default function Simple() {
                         </Menu>
                     </Flex>
                 </Flex>
-
-                {/* {isOpen ? (
-                    <Box pb={4} display={{ md: 'none' }}>
-                        <Stack as={'nav'} spacing={4}>
-                            {Links.map((link) => (
-                                <NavLink key={link}>hello</NavLink>
-                            ))}
-                        </Stack>
-                    </Box>
-                ) : null} */}
             </Box>
 
             <Box p={4}> <AllRoutes /></Box>

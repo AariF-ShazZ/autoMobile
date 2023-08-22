@@ -2,7 +2,7 @@ import React, { useEffect} from 'react'
 import HomeSlider from "../Components/HomeSlider";
 import { Box, Heading } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { getProducts } from '../Redux/actions';
+import { getProducts } from '../Redux/productReducer/actions';
 import { MultipleItems } from '../Components/ProductSlider';
 import { Link } from 'react-router-dom';
 

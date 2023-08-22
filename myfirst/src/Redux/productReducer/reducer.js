@@ -2,7 +2,8 @@ import * as types from "./actionTypes"
 const initialState = {
     products:[],
     isLoading:false,
-    isError:false
+    isError:false,
+    singleProduct:{}
 }
 
 export const productsReducer = (state=initialState,{type,payload}) =>{
@@ -17,7 +18,25 @@ export const productsReducer = (state=initialState,{type,payload}) =>{
             ...state,isLoading:false,products:payload
         }
     }
-    case types.GET_PRODUCTS_REQUEST:{
+    case types.GET_PRODUCTS_ERROR:{
+        return {
+            ...state,isLoading:false,isError:true
+        }
+    }
+
+    case types.SINGLE_PRODUCTS_REQUEST:{
+        return {
+            ...state,isLoading:false
+        }
+    }
+    case types.SINGLE_PRODUCTS_SUCCESS:{
+        console.log("reducer",payload);
+        return {
+            ...state,
+            singleProduct: payload
+        }
+    }
+    case types.SINGLE_PRODUCTS_ERROR:{
         return {
             ...state,isLoading:false,isError:true
         }
