@@ -164,7 +164,7 @@ const showFirstImage = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={() =>  navigate(`/details/${props.data.id}`)} >
+              <Button colorScheme='#ff4556' bg={"#ff4556"} color={"#fff"} mr={3} onClick={() =>  navigate(`/details/${props.data.id}`)} >
                 More Details
               </Button>
            

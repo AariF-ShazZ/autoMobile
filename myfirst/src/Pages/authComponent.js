@@ -59,12 +59,22 @@ margin: 0;
 `;
 
 export const Input = styled.input`
-background-color: #eee;
-color:red;
-border: none;
-padding: 12px 15px;
-margin: 8px 0;
-width: 100%; 
+  background-color: #e1e1e1;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  color: red;
+  border: none;
+  border-radius:7px;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+
+  &::placeholder {
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const Button = styled.button`

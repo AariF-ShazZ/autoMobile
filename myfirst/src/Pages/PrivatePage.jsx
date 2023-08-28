@@ -6,7 +6,7 @@ const PrivatePage = ({children}) => {
 
    const token = useSelector((store) => store.reducer.token)
    console.log("token",token);
-    if(true){
+    if(false){
       return <Navigate to={"/login"}/>
     }
 

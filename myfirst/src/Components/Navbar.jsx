@@ -125,25 +125,26 @@ export default function Simple() {
                     <HStack spacing={14} alignItems={'center'} w={"auto"}>
                         <Box> <Heading textAlign={"left"} color={"red"}><Link to={"/"}>ShoesHub</Link></Heading></Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }} alignContent={"center"} justifyContent={"center"}>
-                            <InputGroup>
-                                <InputLeftElement pointerEvents='none' display={"flex"} alignContent={"center"} justifyContent={"center"}>
-                                    <SearchIcon color='gray.300' mt={"10px"} fontSize={"20px"} />
-                                </InputLeftElement>
+                            <InputGroup display={"flex"} alignItems={"center"} _focus={{border:"1px solid red"}}>
+                                
                                 <Input
                                     type='text'
-                                    isInvalid
                                     color={"blackAlpha.600"}
-                                    errorBorderColor="crimson"
                                     placeholder="Search something here"
                                     _placeholder={{
                                         color: "gray.500", // You can use any Chakra UI color token
                                     }}
-                                    size={"lg"} w={"550px"}
+                                    _focus={{border:"none"}}
+                                    size={"lg"}
+                                     w={"450px"}
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                 // display={{base:"none",}}
                                 />
-                                <button style={{backgroundColor:"blue"}}  onClick={handleSubmit}> Search</button>
+                                {/* <InputRightElement pointerEvents='none' display={"flex"} alignContent={"center"} justifyContent={"center"}>
+                                    <SearchIcon color='gray.300' mt={"10px"} fontSize={"20px"} />
+                                </InputRightElement> */}
+                                <button className="button-71" role="button"   onClick={handleSubmit}> Search</button>
                             </InputGroup>
                         </HStack>
                     </HStack>

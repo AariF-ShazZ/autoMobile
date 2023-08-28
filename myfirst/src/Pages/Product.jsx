@@ -13,11 +13,12 @@ const Product = () => {
   // console.log("products => ", products);
   const location = useLocation()
   const dispatch = useDispatch()
-  const [currentPage, setCurrentPage] = useState({
-    count:0,
-    from:0
-    // to:pageSize
-})
+//   let pageSize = 10
+//   const [currentPage, setCurrentPage] = useState({
+//     count:0,
+//     from:0,
+//     to:pageSize
+// })
 const [page,setPage] = useState(1)
 
   useEffect(() => {
@@ -64,11 +65,11 @@ const [page,setPage] = useState(1)
 // }
   return (
     <>
-      <Flex bg={"green"}>
-        <Box p={'4'}  w={"20%"} bg='red' display={{base:'none',md:"inline",lg:"inline"}}>
+      <Flex bg={""}>
+        <Box p={'4'}  w={"20%"} bg='' display={{base:'none',md:"inline",lg:"inline"}}>
           <FilterCom />
         </Box>
-        <Box p='4' pl={"2%"}  ml={"1%"} bg={"yellow"}>
+        <Box p='4' pl={"2%"}  ml={"1%"} bg={""}>
           <Grid templateColumns={{base:'repeat(1, 1fr)', md:'repeat(2, 1fr)',lg:'repeat(3, 1fr)'}} gap={5} bg={""} >
             {products.map((x, i) => {
               return (

@@ -17,7 +17,7 @@ const Home = () => {
     <Box >
       <HomeSlider />
       <Box bg={""} mt={"5%"} >
-        <Heading>Popular Car</Heading>
+        <Heading color={"red"}  textAlign={"left"} p={"1%"}>Popular Shoes</Heading>
         <MultipleItems/>
       </Box>
       <Box mt={"5%"} >
