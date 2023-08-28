@@ -67,7 +67,7 @@ export const MultipleItems = () => {
         nextArrow={<NextArrow className="slick-next" />}
         prevArrow={<PrevArrow className="slick-prev" />}
       >
-        {products.map((x, i) => {
+        {products.length > 0 && products.map((x, i) => {
           if(i<10){
             return (
               <Card data={x}/>

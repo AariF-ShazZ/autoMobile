@@ -24,25 +24,48 @@ const singleProductRequest = () => {
     }
 }
 
-const singleProductSuccess = (paylaod) => {
-    // console.log("payload",paylaod);
-    return{
+
+const singleProductSuccess = (payload) => {
+    return {
         type:types.SINGLE_PRODUCTS_SUCCESS,
-        paylaod
+        payload
     }
 }
+
 const singleProductError = () => {
     return{
         type:types.SINGLE_PRODUCTS_ERROR
     }
 }
 
+const searchByQueryRequest = () => {
+    // console.log("payload",paylaod);
+    return {
+        type:types.SEARCH_QUERY_REQUEST
+    }
+}
+const searchByQuerySuccess = (paylaod) => {
+    // console.log("payload",paylaod);
+    return {
+        type:types.SEARCH_QUERY_SUCCESS,
+        paylaod
+    }
+}
+const searchByQueryError = () => {
+    // console.log("payload",paylaod);
+    return {
+        type:types.SEARCH_QUERY_ERROR
+    }
+}
 
-export const getProducts = () => (dispatch) => {
+
+
+export const getProducts = (page,params) => (dispatch) => {
+    console.log("page",page);
     dispatch(getProductsRequest())
-    return axios.get("https://green-hermit-crab-vest.cyclic.app/products")
+    return axios.get(`https://green-hermit-crab-vest.cyclic.app/products?_page=${page}&_limit=10`,params)
     .then((res) =>{  
-        // console.log("res => ",res.data);
+        console.log("res => ",res.data);
         dispatch(getProductsSuccess(res.data))
     })
     .catch((err) =>  dispatch(getProductsError()))
@@ -52,8 +75,19 @@ export const getSingleProducts = (id) => (dispatch) => {
     dispatch(singleProductRequest())
     return axios.get(`https://green-hermit-crab-vest.cyclic.app/products/${id}`)
     .then((res) =>{  
-        console.log("resksjdfkl => ",res.data);
+        // console.log("resksjdfkl => ",res.data);
         dispatch(singleProductSuccess(res.data))
     })
     .catch((err) =>  dispatch(singleProductError()))
+}
+
+export const searchProducts= (query) => (dispatch) => {
+    console.log("query",query);
+    dispatch(searchByQueryRequest())
+    return axios.get(`https://green-hermit-crab-vest.cyclic.app/products?name=${query}`)
+    .then((res) =>{  
+        console.log("search query => ",res.data);
+        dispatch(searchByQuerySuccess(res.data))
+    })
+    .catch((err) =>  dispatch(searchByQueryError()))
 }

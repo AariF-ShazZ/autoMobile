@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <Box >
       <HomeSlider />
-      <Box bg={"red"} mt={"5%"} >
+      <Box bg={""} mt={"5%"} >
         <Heading>Popular Car</Heading>
         <MultipleItems/>
       </Box>

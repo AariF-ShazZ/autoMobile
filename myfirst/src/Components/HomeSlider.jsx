@@ -7,7 +7,7 @@ const HomeSlider = () => {
     height: '400px',
     borderRadius: '20px'
   };
-   const images = ["https://media.istockphoto.com/id/932120954/photo/red-sports-car-silhouette-on-black-background.jpg?s=170667a&w=0&k=20&c=IIL23kQAU1peYk4fvbzOiTwaKYdKY3I1rgP600p3J-0=","https://cutewallpaper.org/22/ps4-4k-hd-retro-car-wallpapers/186528748.jpg","https://mir-s3-cdn-cf.behance.net/projects/404/dd762d171852189.Y3JvcCwxMzgwLDEwODAsMCww.jpg"]
+   const images = ["https://wallpaperaccess.com/full/2043565.jpg","https://wallpaperaccess.com/full/4207452.jpg","https://wallpaperset.com/w/full/4/9/c/186657.jpg","https://wallpaperaccess.com/full/1597755.jpg"]
   return (
     <Box backgroundColor={""}>
       <AwesomeSlider style={sliderStyle} backgroundColor={""}>
