@@ -8,7 +8,7 @@ import Card from "./Card";
 
 export const MultipleItems = () => {
   const products = useSelector((store) => store.productsReducer.products);
-  console.log("product => ", products);
+  // console.log("product => ", products);
 
   const [settings, setSettings] = useState({
     dots: true,

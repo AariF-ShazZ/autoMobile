@@ -26,15 +26,14 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Card(props) {
   // console.log("card =>",props.data);
   const [selectImage, setSelectImage] = useState(props.data.images[0])
   const [Img, setImg] = useState(props.data.images[0])
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const navigate = useNavigate()
-
+ 
   const showSecondImage = () => {
     setImg(props.data.images[1])
 }
@@ -164,7 +163,7 @@ const showFirstImage = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Link to={`/details/${props.data.id}`}>
+              <Link to={`/details/${props.data._id}`}>
               <Button colorScheme='#ff0000' bg={"#ff0000"} color={"#fff"} mr={3} >
                 More Details
               </Button>

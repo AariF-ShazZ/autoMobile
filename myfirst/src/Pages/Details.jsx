@@ -7,7 +7,7 @@ import { BsFillHeartFill } from "react-icons/bs"
 import { addToCart } from '../Redux/cartReducer/actions';
 const Details = () => {
   const singleData = useSelector((store) => store.productsReducer.singleProduct);
-  // console.log(singleData);
+  console.log(singleData);
   const { id } = useParams();
   const dispatch = useDispatch();
 

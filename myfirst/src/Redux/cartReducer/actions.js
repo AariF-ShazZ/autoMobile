@@ -7,21 +7,21 @@ export const addToCart = (payload) => {
     }
 }
 export const increaseQuantity = (payload) => {
-    console.log("paylaod",payload.id,payload.size);
+    console.log("increase Item action",payload.id,payload.size);
     return {
         type:types.INCREASE_QUANTITY,
         payload
     }
 }
 export const decreaseQuantity = (payload) => {
-    console.log("paylaod",payload.id,payload.size);
+    console.log("decrease Item action",payload.id,payload.size);
     return {
         type:types.DECREASE_QUANTITY,
         payload
     }
 }
 export const removeItem = (payload) => {
-    // console.log("paylaod",payload.id,payload.size);
+    console.log("removeItem action",payload.id,payload.size);
     return {
         type:types.REMOVE_ITEM,
         payload

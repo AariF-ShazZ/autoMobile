@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-
+import imptyCart from "../Images/imptyCart.webp"
 import {
     Box,
     Flex,
@@ -69,10 +69,7 @@ export default function Simple() {
             .then((res) => navigate("/products"))
             .catch((err) => console.log("err", err))
     }
-    const iconStyle = {
-        fontSize: '25px',
-        marginRight: '30px',
-    };
+  
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleDecrease = (id, size, qty) => {
@@ -81,10 +78,10 @@ export default function Simple() {
         } else {
             dispatch(removeItem({ id, size }))
         }
-        // console.log(id,size)
     }
 
     const handleIncrease = (id, size, qty) => {
+        // console.log("increase =>",id,size);
         dispatch(increaseQuantity({ id, size }))
         // console.log(id,size)
     }
@@ -127,23 +124,30 @@ export default function Simple() {
                     </Box>
                     <HStack spacing={14} alignItems={'center'} w={"auto"}>
                         <Box> <Heading textAlign={"left"} color={"#ff0000 "}><Link to={"/"}>ShoesHub</Link></Heading></Box>
-                        <HStack
-                            as={'nav'} // The <HStack> component is being treated as a <nav> element.
-                            spacing={4} // Spacing between child elements.
-                            display={{
-                                base: 'none', // On small screens, the <HStack> is displayed as a block.
-                                md: { display: "flex", width: "200px" }, // On medium screens, it's displayed as a flex container with a width of 200px.
-                                lg: "flex" // On large screens, it's displayed as a flex container.
-                            }}
-                            align="center" // Aligns content vertically.
-                            justify="center" // Centers content horizontally.
-                        >
-                            <SearchBox
-                                handleSubmit={handleSubmit} // handleSubmit function passed as a prop.
-                                query={query} // query value passed as a prop.
-                                setQuery={setQuery} // setQuery function passed as a prop.
-                            />
-                        </HStack>
+                        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            
+                            <HStack
+                                as={'nav'}
+                                spacing={4}
+                                display={{
+                                    base: 'none',
+                                    md: { display: "flex" },
+                                    lg: "flex"
+                                }}
+                                align="center"
+                                justify="center"
+                            >
+                                <Box display={['none', 'none', 'block']}>
+                                    <SearchBox
+                                        handleSubmit={handleSubmit}
+                                        query={query}
+                                        setQuery={setQuery}
+                                    />
+                                </Box>
+                            </HStack>
+
+                        </Flex>
+
 
                     </HStack>
                     <Flex w="14%" alignItems={'center'} justifyContent={"space-between"} >
@@ -167,30 +171,32 @@ export default function Simple() {
                                     <DrawerHeader color={"gray"}>YOUR CART ({cart.length})</DrawerHeader>
 
                                     <DrawerBody >
+
                                         {
+                                            cart.length ? 
                                             cart.length > 0 && cart.map((item) => {
-                                                return <Flex key={item.id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.100"}>
-                                                    <Image boxSize={"75px"} src={item.images[0]} alt="shoe" />
+                                                return <Flex key={item.id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.500"}>
+                                                    <Image boxSize={"75px"} src={item.images[0]} alt="shoe"  mr={"3%"}/>
                                                     <Box >
                                                         <Flex justifyContent={"space-between"} align="center">
                                                             <Text fontSize={"13px"}>{`${item.name} | ${item.color} | ${item.gender}`}</Text>
-                                                            <Icon boxSize={5} ml="5" as={RxCross2} bg={"red"} onClick={() => handleRemove(item.id, item.size)} />
+                                                            <Icon boxSize={5} ml="5" as={RxCross2} bg={"red"} onClick={() => handleRemove(item._id, item.size)} />
                                                         </Flex>
                                                         <Text as="sup">{item.size}</Text>
-                                                        <Flex justifyContent={"space-between"} align="center">
-                                                            <Flex>
-                                                                <Button onClick={() => handleDecrease(item.id, item.size, item.qty)}>-</Button>
-                                                                <Button>{item.qty}</Button>
-                                                                <Button onClick={() => handleIncrease(item.id, item.size, item.qty)}>+</Button>
+                                                        <Flex  border={"2px solid yellow"} w={"100%"} align="center" justifyContent={"space-between"} >
+                                                            <Flex bg={""} w={"150px"} align={"center"}  justify={"space-evenly"}>
+                                                                <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleDecrease(item._id, item.size, item.qty)}>-</Button>
+                                                                <Button  colorScheme="red" bg={"red"} color={"#fff"}>{item.qty}</Button>
+                                                                <Button  colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleIncrease(item._id, item.size, item.qty)}>+</Button>
                                                             </Flex>
-                                                            <Flex p="4px" justifyContent={"space-around"} align="center">
+                                                            <Flex m="4%" justifyContent={"space-around"} align="center">
                                                                 <Text>Rs.{item.final_price}</Text>
                                                                 <Text as="s" mr={4}>Rs.{item.original_price}</Text>
                                                             </Flex>
                                                         </Flex>
                                                     </Box>
                                                 </Flex>
-                                            })
+                                            }) : <Image  src={imptyCart}/>
                                         }
                                     </DrawerBody>
                                     <Flex display={"flex"} justifyContent={"space-between"} alignItems="center" m={2}>
@@ -215,15 +221,12 @@ export default function Simple() {
                                     variant={'link'}
                                     cursor={'pointer'}
                                     minW={0}>
-
                                     <Avatar
                                         size={'sm'}
                                         src={
                                             'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                                         }
                                     />
-
-
                                 </MenuButton>
                             </Link>
                             <MenuList>
@@ -235,6 +238,32 @@ export default function Simple() {
                         </Menu>
                     </Flex>
                 </Flex>
+                <Flex h={16} mt={"-3%"} mb={"2%"} alignItems={'center'} justifyContent={'space-between'}  display={{
+                            base: { display: "flex"},
+                            md: { display: "flex"},
+                            lg: "none"
+                        }}>
+            
+                    <HStack
+                        as={'nav'}
+                        spacing={4}
+                        display={{
+                            base: { display: "flex"} ,
+                            sm:{display:"flex"},
+                            md: { display: "flex"},
+                            lg:"none",
+                        }}
+                    >
+                        <Box p={"2%"} m={"2% 0"}>
+                            <SearchBox
+                                handleSubmit={handleSubmit}
+                                query={query}
+                                setQuery={setQuery}
+                            />
+                        </Box>
+                    </HStack>
+                </Flex>
+
             </Box>
 
             <Box p={4}> <AllRoutes /></Box>

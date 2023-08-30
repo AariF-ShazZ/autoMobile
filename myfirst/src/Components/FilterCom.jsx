@@ -46,48 +46,55 @@ const FilterCom = () => {
   console.log("sort",sort);
   return (
     <>
-      <Box w={"100%"} h={"400px"} bg={"gray"}>
-        <Box>
-          <Heading as='legend' fontSize={"25px"}>
+      <Box w={"100%"} h={"400px"} bg={"gray.200"} boxShadow={"rgba(149, 157, 165, 0.2) 0px 8px 24px;"} p={"10% 8%"}>
+        <Box mb={"10%"}>
+          <Heading as='legend' fontSize={"25px"} color={"gray"} mb={"6%"}>
             Types
           </Heading>
-          <CheckboxGroup defaultValue='Itachi'>
-            <VStack spacing='24px'>
-              <div>
+          <CheckboxGroup defaultValue='Itachi' >
+            <VStack spacing='10px' textAlign={"start"} color={"gray.500"} >
+              <Flex w={"150px"}  align={"center"}  justify={"start"}>
+                <Flex w={"60px"} bg={""} justify={"space-between"}>
                 <input
                   type="checkbox"
                   value={"MEN"}
                   checked={category.includes("MEN")}
                   onChange={handleFilterCheckbox} />
                 <label htmlFor="">MEN</label>
-              </div>
-              <div>
-                <input
+                </Flex>
+              </Flex>
+              <Flex w={"150px"} bg={""} align={"center"}  justify={"start"}>
+               <Flex w={"88px"} bg={""} justify={"space-between"}>
+               <input
                   type="checkbox"
                   value={"WOMEN"}
                   checked={category.includes("WOMEN")}
                   onChange={handleFilterCheckbox} />
                 <label htmlFor="">WOMEN</label>
-              </div>
-              <div>
-                <input
+               </Flex>
+              </Flex>
+              <Flex w={"150px"} bg={""} align={"center"}  justify={"start"}>
+              <Flex w={"60px"} bg={""} justify={"space-between"}>
+              <input
                   type="checkbox"
                   value={"KIDS"}
                   checked={category.includes("KIDS")}
                   onChange={handleFilterCheckbox} />
                 <label htmlFor="">KIDS</label>
-              </div>
+              </Flex>
+               
+              </Flex>
             </VStack>
           </CheckboxGroup>
         </Box>
-        <Box>
-          <Heading as='legend' fontSize={"25px"}>
+        <Box textAlign={"left"}>
+          <Heading as='legend' fontSize={"25px"} color={"gray"}>
             Sort By Price
           </Heading>
           <RadioGroup defaultValue='Itachi'>
-            <VStack spacing='24px'>
-              <Flex onChange={handleSort} direction={"column"}>
-                <Flex>
+            <VStack spacing='28px' color={"gray.500"}>
+              <Flex onChange={handleSort} direction={"column"} mt={"5%"} textAlign={"left"}>
+                <Flex w={"150px"} bg={""} align={"center"}  justify={"space-evenly"}>
                 <input
                   type="radio"
                   value={"asc"}
@@ -96,7 +103,7 @@ const FilterCom = () => {
                    />
                 <label htmlFor="">Low To High</label>
                 </Flex>
-               <Flex>
+               <Flex w={"150px"} bg={""} align={"center"}  justify={"space-evenly"}>
                <input
                   type="radio"
                   value={"desc"}

@@ -11,9 +11,8 @@ const Authentication = () => {
     const dispatch=useDispatch()
     const navigate = useNavigate()
     const location  = useLocation()
-    // console.log("location in the login page =>",location);
     const comingFrom = location.state?.data || "/"
-    console.log("comingFrom =>",comingFrom);
+    // console.log("comingFrom =>",comingFrom);
     const hanldeLoginSubmit =(e) => {
         e.preventDefault()
         // console.log("alkdflkjd",email,password);
