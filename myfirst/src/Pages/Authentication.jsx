@@ -3,16 +3,22 @@ import * as Components from './authComponent';
 import { Box } from '@chakra-ui/react';
 import { useDispatch } from "react-redux"
 import { login } from '../Redux/authReducer/actions';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Authentication = () => {
     const [signIn, toggle] = useState(true);
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const dispatch=useDispatch()
-
-    const hanldeSubmit =(e) => {
+    const navigate = useNavigate()
+    const location  = useLocation()
+    // console.log("location in the login page =>",location);
+    const comingFrom = location.state?.data || "/"
+    console.log("comingFrom =>",comingFrom);
+    const hanldeLoginSubmit =(e) => {
         e.preventDefault()
         // console.log("alkdflkjd",email,password);
         dispatch(login({email,password}))
+        .then((res) =>  navigate(comingFrom,{replace:true}))
     }
   return (
     <div>
@@ -25,17 +31,17 @@ const Authentication = () => {
                       <Components.Input type='text' placeholder='Name' />
                       <Components.Input type='email' placeholder='Email' />
                       <Components.Input type='password' placeholder='Password' />
-                      <Components.Button>Sign Up</Components.Button>
+                      <Components.Button type="submit">Sign Up</Components.Button>
                   </Components.Form>
               </Components.SignUpContainer>
 
               <Components.SignInContainer signinIn={signIn}>
-                   <Components.Form onSubmit={hanldeSubmit}>
+                   <Components.Form onSubmit={hanldeLoginSubmit}>
                        <Components.Title>Sign in</Components.Title>
                        <Components.Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                        <Components.Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                        <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
-                       <Components.Button>Sigin In</Components.Button>
+                       <Components.Button type='submit'>Sigin In</Components.Button>
                    </Components.Form>
               </Components.SignInContainer>
 

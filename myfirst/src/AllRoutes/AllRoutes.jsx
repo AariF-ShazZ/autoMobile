@@ -16,10 +16,10 @@ export const AllRoutes = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/details/:id' element={
-          <PrivatePage>
-            <Details />
-          </PrivatePage>
-        } />
+        <PrivatePage>
+          <Details />
+        </PrivatePage>
+        }/>
         <Route path='/products' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/login' element={<Authentication />} />

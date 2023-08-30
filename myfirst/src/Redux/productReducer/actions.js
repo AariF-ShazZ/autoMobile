@@ -44,11 +44,11 @@ const searchByQueryRequest = () => {
         type:types.SEARCH_QUERY_REQUEST
     }
 }
-const searchByQuerySuccess = (paylaod) => {
-    // console.log("payload",paylaod);
+const searchByQuerySuccess = (payload) => {
+    console.log("payload",payload);
     return {
         type:types.SEARCH_QUERY_SUCCESS,
-        paylaod
+        payload
     }
 }
 const searchByQueryError = () => {
@@ -82,11 +82,11 @@ export const getSingleProducts = (id) => (dispatch) => {
 }
 
 export const searchProducts= (query) => (dispatch) => {
-    console.log("query",query);
+    // console.log("query",query);
     dispatch(searchByQueryRequest())
     return axios.get(`https://green-hermit-crab-vest.cyclic.app/products?name=${query}`)
     .then((res) =>{  
-        console.log("search query => ",res.data);
+        // console.log("search query => ",res.data);
         dispatch(searchByQuerySuccess(res.data))
     })
     .catch((err) =>  dispatch(searchByQueryError()))

@@ -7,7 +7,8 @@ const initialState = {
 }
 
 export const productsReducer = (state=initialState,{type,payload}) =>{
-    // console.log("start",type,payload);
+   
+    // console.log("start => ",type,payload);
     switch(type){
     case types.GET_PRODUCTS_REQUEST:{
         return {
@@ -48,7 +49,7 @@ export const productsReducer = (state=initialState,{type,payload}) =>{
         }
     }
     case types.SEARCH_QUERY_SUCCESS:{
-        console.log("search reducer",payload);
+        // console.log("search reducer",type,payload);
         return {
             ...state,products:payload
         }

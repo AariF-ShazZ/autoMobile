@@ -26,7 +26,7 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Card(props) {
   // console.log("card =>",props.data);
@@ -49,7 +49,7 @@ const showFirstImage = () => {
         p={6}
         maxW={'330px'}
         w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={useColorModeValue('white', 'gray.300')}
         boxShadow={'2xl'}
         rounded={'lg'}
         pos={'relative'}
@@ -164,9 +164,12 @@ const showFirstImage = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme='#ff4556' bg={"#ff4556"} color={"#fff"} mr={3} onClick={() =>  navigate(`/details/${props.data.id}`)} >
+              <Link to={`/details/${props.data.id}`}>
+              <Button colorScheme='#ff0000' bg={"#ff0000"} color={"#fff"} mr={3} >
                 More Details
               </Button>
+              </Link>
+              
            
             </ModalFooter>
           </ModalContent>

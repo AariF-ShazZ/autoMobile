@@ -64,7 +64,6 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
         }
 
     }
-
     default: return state
 }
 }

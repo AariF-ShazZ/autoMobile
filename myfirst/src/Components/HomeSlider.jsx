@@ -1,13 +1,17 @@
 import { Box } from '@chakra-ui/react';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-
+import image1 from "../Images/image_1.jpg"
+import image2 from "../Images/image_2.jpg"
+import image3 from "../Images/image_3.jpg"
+import image4 from "../Images/image_4.jpg"
+import image5 from "../Images/image_5.jpg"
 const HomeSlider = () => {
   const sliderStyle = {
     height: '400px',
     borderRadius: '20px'
   };
-   const images = ["https://wallpaperaccess.com/full/2043565.jpg","https://wallpaperaccess.com/full/4207452.jpg","https://wallpaperset.com/w/full/4/9/c/186657.jpg","https://wallpaperaccess.com/full/1597755.jpg"]
+   const images = [image4,image1,image2,image3,image5]
   return (
     <Box backgroundColor={""}>
       <AwesomeSlider style={sliderStyle} backgroundColor={""}>

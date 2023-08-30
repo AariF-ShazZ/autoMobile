@@ -25,7 +25,7 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 export default function LargeWithLogoLeft() {
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
+      bg={useColorModeValue('#ffffff', '#fff')}
       color={useColorModeValue('gray.700', 'gray.200')}>
       <Container as={Stack} maxW={'6xl'} py={10}>
         <SimpleGrid
@@ -34,12 +34,12 @@ export default function LargeWithLogoLeft() {
           <Stack spacing={6}>
             <Box>
               {/* <Logo color={useColorModeValue('gray.700', 'white')} /> */}
-              <Heading textAlign={"left"} color={"red"}><Link to={"/"}>ShoesHub</Link></Heading>
+              <Heading textAlign={"left"} color={"#ff0000"}><Link to={"/"}>ShoesHub</Link></Heading>
             </Box>
-            <Text fontSize={'sm'} textAlign={'left'}>Our vision is to provide convenience
+            <Text fontSize={'sm'} textAlign={'left'} color={"#718096"}>Our vision is to provide convenience
 and help increase your sales business.</Text>
           </Stack>
-          <Stack align={'flex-start'}>
+          <Stack align={'flex-start'} color={"#718096"}>
             <ListHeader>Product</ListHeader>
             <Box as="a" href={'#'}>
               Overview
@@ -57,7 +57,7 @@ and help increase your sales business.</Text>
               Releases
             </Box>
           </Stack>
-          <Stack align={'flex-start'}>
+          <Stack align={'flex-start'} color={"#718096"}>
             <ListHeader>Company</ListHeader>
             <Box as="a" href={'#'}>
               About
@@ -75,7 +75,7 @@ and help increase your sales business.</Text>
               Partners
             </Box>
           </Stack>
-          <Stack align={'flex-start'}>
+          <Stack align={'flex-start'} color={"#718096"}>
             <ListHeader>Support</ListHeader>
             <Box as="a" href={'#'}>
               Help Center
@@ -93,7 +93,7 @@ and help increase your sales business.</Text>
               Status
             </Box>
           </Stack>
-          <Stack align={'flex-start'}>
+          <Stack align={'flex-start'} color={"#718096"}>
             <ListHeader>Follow Us</ListHeader>
             <Box as="a" href={'#'}>
               Facebook
