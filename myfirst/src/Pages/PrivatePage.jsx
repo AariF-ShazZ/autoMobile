@@ -4,10 +4,11 @@ import { Navigate, useLocation } from 'react-router-dom'
 
 const PrivatePage = ({children}) => {
 
+   const token = useSelector((store) => store.authReducer.token)
    const isAuth = useSelector((store) => store.authReducer.isAuth)
    const location  =useLocation()
-  //  console.log("location in private page =>",location);
-    if(!isAuth){
+   console.log("Token in private page =>",token,isAuth);
+    if(!token){
       return <Navigate to={"/login"} replace state={{data:location.pathname}}/>
     }
 

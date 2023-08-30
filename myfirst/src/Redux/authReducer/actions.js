@@ -18,7 +18,9 @@ const loginError  = () => {
 }
 
 export const login  = (payload) => (dispatch) => {
+    console.log("login payload",payload);
     dispatch(loginRequest())
+    // return axios.post("https://ill-teal-betta-garb.cyclic.app/user/login",payload)
     return axios.post("https://reqres.in/api/login",payload)
     .then((res) => {
         console.log("login",res.data.token);

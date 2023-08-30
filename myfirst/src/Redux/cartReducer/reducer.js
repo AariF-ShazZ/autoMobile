@@ -4,7 +4,7 @@ const initialState = {
 }
 
 export const cartReducer = (state=initialState,{type,payload}) =>{
-    console.log("cart_reducer",payload,type);
+    // console.log("cart_reducer",payload,type);
      switch(type){
     case types.ADD_TO_CART:{
         
@@ -25,7 +25,7 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
                 ...payload,
                 qty:1
             }
-            console.log("newPayload",newPayload);
+            // console.log("newPayload",newPayload);
             newCart = [...state.cart,newPayload]
         }
         return {
@@ -35,7 +35,7 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
 
     case types.INCREASE_QUANTITY:{
         let increaseQuantityItem =state.cart.map((ele) =>{
-            if(ele._id===payload.id && ele.size===payload.size){
+            if(ele.id===payload.id && ele.size===payload.size){
                 return {...ele,qty:ele.qty+1}
             }else {
                 return ele
@@ -48,7 +48,7 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
 
     case types.DECREASE_QUANTITY:{
         let decreaseQuantityItem =state.cart.map((ele) =>{
-            if(ele._id===payload.id && ele.size===payload.size){
+            if(ele.id===payload.id && ele.size===payload.size){
                 return {...ele,qty:ele.qty-1}
             }else { 
                 return ele
@@ -59,7 +59,7 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
         }
     }
     case types.REMOVE_ITEM:{
-        let updatedCart =state.cart.filter((ele) => !(ele._id===payload.id && ele.size===payload.size))
+        let updatedCart =state.cart.filter((ele) => !(ele.id===payload.id && ele.size===payload.size))
         return {
             ...state,cart:updatedCart
         }

@@ -63,8 +63,8 @@ const searchByQueryError = () => {
 export const getProducts = (page,params) => (dispatch) => {
     console.log("page",page);
     dispatch(getProductsRequest())
-    // return axios.get(`https://green-hermit-crab-vest.cyclic.app/products?_page=${page}&_limit=10`,params)
-    return axios.get(`https://ill-teal-betta-garb.cyclic.app/product/read`,params)
+    // return axios.get(`https://ill-teal-betta-garb.cyclic.app/product/read`,params)
+    return axios.get(`https://ill-cyan-buffalo-kilt.cyclic.app/products?_page=${page}&_limit=10`,params)
     .then((res) =>{  
         console.log("res => ",res.data);
         dispatch(getProductsSuccess(res.data))
@@ -74,8 +74,8 @@ export const getProducts = (page,params) => (dispatch) => {
 
 export const getSingleProducts = (id) => (dispatch) => {
     dispatch(singleProductRequest())
-    // return axios.get(`https://green-hermit-crab-vest.cyclic.app/products/${id}`)
-    return axios.get(`https://ill-teal-betta-garb.cyclic.app/product/read/${id}`)
+    // return axios.get(`https://ill-teal-betta-garb.cyclic.app/product/read/${id}`)
+    return axios.get(`https://ill-cyan-buffalo-kilt.cyclic.app/products/${id}`)
     .then((res) =>{  
         // console.log("resksjdfkl => ",res.data);
         dispatch(singleProductSuccess(res.data))

@@ -163,7 +163,7 @@ const showFirstImage = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Link to={`/details/${props.data._id}`}>
+              <Link to={`/details/${props.data.id}`}>
               <Button colorScheme='#ff0000' bg={"#ff0000"} color={"#fff"} mr={3} >
                 More Details
               </Button>
