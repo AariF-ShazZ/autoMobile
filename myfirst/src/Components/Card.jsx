@@ -98,7 +98,7 @@ const showFirstImage = () => {
                 <Grid w={"100%"} templateColumns='repeat(5, 1fr)' gap={3} >
                   {
                     props.data.images.map((ele, i) =>
-                      <GridItem w='100%' h={"70px"} _hover={{ cursor: "pointer",boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px",borderRadius:"10px" }} onClick={() => setSelectImage(ele)}>
+                      <GridItem w='100%' h={"70px"} _hover={{ cursor: "pointer",boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px",borderRadius:"10px" }} onMouseOver={() => setSelectImage(ele)}>
                         <Image src={ele} key={i} w={"100%"} alt='Image Error' backgroundColor={"transparent"} borderRadius={"10px"}/>
                       </GridItem>
                     )
@@ -163,7 +163,7 @@ const showFirstImage = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Link to={`/details/${props.data.id}`}>
+              <Link to={`/details/${props.data._id}`}>
               <Button colorScheme='#ff0000' bg={"#ff0000"} color={"#fff"} mr={3} >
                 More Details
               </Button>

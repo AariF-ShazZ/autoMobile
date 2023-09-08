@@ -10,7 +10,7 @@ import { Pagination } from "@mui/material"
 const Product = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const products = useSelector((store) => store.productsReducer.products)
-  // console.log("products => ", products);
+  console.log("products => ", products);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRef = React.useRef(null)
   const location = useLocation()
@@ -67,12 +67,12 @@ const Product = () => {
   // }
   return (
     <>
-      <Flex bg={""} display={{base:{direction:"column"},md:{direction:"column"},lg:"flex"}}>
+      <Flex bg={""} display={{ base: { direction: "column" }, md: { direction: "column" }, lg: "flex" }}>
         <Box p={'4'} w={"20%"} bg='' display={{ base: 'none', md: "none", lg: "inline" }}>
           <FilterCom />
         </Box>
         <Box bg="" p={'2%'} h={"400px"} w={"80%"} display={{ base: 'inline', md: "inline", lg: "none" }} alignItems={"center"}>
-          <Button onClick={onOpen} color={"#fff"}bg={"#ff0000"} m={"2% 0 2% 60% "}>
+          <Button onClick={onOpen} color={"#fff"} bg={"#ff0000"} m={"2% 0 2% 60% "}>
             Filter Here
           </Button>
           <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
@@ -82,7 +82,7 @@ const Product = () => {
               <ModalCloseButton />
               <ModalBody>
                 {/* <Lorem count={2} /> */}
-                <FilterCom/>
+                <FilterCom />
               </ModalBody>
 
               <ModalFooter>
@@ -95,7 +95,7 @@ const Product = () => {
         </Box>
         <Box p='4' pl={"2%"} ml={"1%"} bg={""}>
           <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} gap={5} bg={""} >
-            {products.map((x, i) => {
+            {products.length > 0 && products.map((x, i) => {
               return (
                 <GridItem >
                   <Card data={x} />
@@ -105,12 +105,15 @@ const Product = () => {
           </Grid>
         </Box>
       </Flex>
-      <Box display={"flex"} alignItems={"center"} justifyContent={"center"} sx={{ margin: "30px 0px" }} bg={"red"} >
-        {/* <Pagination count={Math.ceil(currentPage.count / pageSize)} color="secondary" onChange={hanldeChange} /> */}
-        <Button onClick={() => setPage((prev) => prev - 1)}>Prev</Button>
-        <Button>{page}</Button>
-        <Button onClick={() => setPage((next) => next + 1)}>Next</Button>
-      </Box>
+      <Flex  alignItems={"center"} justifyContent={"center"}>
+        <Box display={"flex"} w={"15%"} alignItems={"center"} justifyContent={"space-between"} sx={{ margin: "30px 0px" }}>
+          {/* <Pagination count={Math.ceil(currentPage.count / pageSize)} color="secondary" onChange={hanldeChange} /> */}
+          <Button onClick={() => setPage((prev) => prev - 1)} colorScheme='#f00' bg={"#f00"} color={"#fff"}>Prev</Button>
+          <Button  color={"#f00"}>{page}</Button>
+          <Button onClick={() => setPage((next) => next + 1)} colorScheme='#f00' bg={"#f00"} color={"#fff"}>Next</Button>
+        </Box>
+      </Flex>
+
 
     </>
   )

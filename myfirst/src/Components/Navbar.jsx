@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import imptyCart from "../Images/imptyCart.webp"
+import emptyCart from "../Images/emptyCart.webp"
 import {
     Box,
     Flex,
@@ -49,15 +49,16 @@ import {
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from "react-redux"
 import { RxCross2 } from "react-icons/rx";
-import { decreaseQuantity, increaseQuantity, removeItem } from "../Redux/cartReducer/actions"
+// import { decreaseQuantity, increaseQuantity, removeItem } from "../Redux/cartReducer/actions"
 import { searchProducts } from "../Redux/productReducer/actions"
 import SearchBox from "./SearchBox"
+import { decreaseQuantity, increaseQuantity, removeItem } from "../Redux/cartReducer/actions"
 
 
 
 export default function Simple() {
     const cart = useSelector((store) => store.cartReducer.cart)
-    console.log("cart", cart);
+    // console.log("cart", cart);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isTrue, setIsTrue] = useState(false)
     const btnRef = React.useRef()
@@ -73,6 +74,7 @@ export default function Simple() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleDecrease = (id, size, qty) => {
+        console.log("decrease =>",id,size);
         if (qty > 1) {
             dispatch(decreaseQuantity({ id, size, qty }))
         } else {
@@ -81,7 +83,7 @@ export default function Simple() {
     }
 
     const handleIncrease = (id, size, qty) => {
-        // console.log("increase =>",id,size);
+        console.log("increase =>",id,size);
         dispatch(increaseQuantity({ id, size }))
         // console.log(id,size)
     }
@@ -184,42 +186,42 @@ export default function Simple() {
                                 <DrawerOverlay />
                                 <DrawerContent bg={"#fff"}>
                                     <DrawerCloseButton />
-                                    <DrawerHeader color={"gray"}>YOUR CART ({cart.length})</DrawerHeader>
+                                    <DrawerHeader color={"gray"} fontWeight={"bold"} fontSize={"25px"}> YOUR CART ({cart.length})</DrawerHeader>
 
                                     <DrawerBody >
 
                                         {
-                                            cart.length ?
-                                                cart.length > 0 && cart.map((item) => {
-                                                    return <Flex key={item.id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.500"}>
+                                            cart.length > 0 ?
+                                              cart.map((item) => {
+                                                    return <Flex key={item._id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.500"}>
                                                         <Image boxSize={"75px"} src={item.images[0]} alt="shoe" mr={"3%"} />
                                                         <Box >
                                                             <Flex justifyContent={"space-between"} align="center">
                                                                 <Text fontSize={"13px"}>{`${item.name} | ${item.color} | ${item.gender}`}</Text>
-                                                                <Icon boxSize={5} ml="5" as={RxCross2} bg={"red"} onClick={() => handleRemove(item.id, item.size)} />
+                                                                <Icon boxSize={5} ml="5" as={RxCross2}  onClick={() => handleRemove(item._id, item.size)} cursor={"pointer"}/>
                                                             </Flex>
                                                             <Text as="sup">{item.size}</Text>
                                                             <Flex border={""} w={"100%"} align="center" justifyContent={"space-between"} >
                                                                 <Flex bg={""} w={"150px"} align={"center"} justify={"space-evenly"}>
-                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleDecrease(item.id, item.size, item.qty)}>-</Button>
+                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleDecrease(item._id, item.size, item.qty)}>-</Button>
                                                                     <Button colorScheme="red" bg={"red"} color={"#fff"}>{item.qty}</Button>
-                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleIncrease(item.id, item.size, item.qty)}>+</Button>
+                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleIncrease(item._id, item.size, item.qty)}>+</Button>
                                                                 </Flex>
-                                                                <Flex m="4%" justifyContent={"space-around"} align="center">
-                                                                    <Text>Rs.{item.final_price}</Text>
-                                                                    <Text as="s" mr={4}>Rs.{item.original_price}</Text>
+                                                                <Flex w={"130px"}  m="4%"align="center" justifyContent={"space-between"} >
+                                                                    <Text fontSize={"18px"} fontWeight={"bold"}>Rs.{item.final_price}</Text>
+                                                                    <Text as="s" fontWeight={"100"}>Rs.{item.original_price}</Text>
                                                                 </Flex>
                                                             </Flex>
                                                         </Box>
                                                     </Flex>
-                                                }) : <Image src={imptyCart} />
+                                                }) : <Image src={emptyCart} mt={"10%"}/>
                                         }
                                     </DrawerBody>
                                     <Flex display={"flex"} justifyContent={"space-between"} alignItems="center" m={2}>
-                                        <Text color={"gray"}>SUBTOTAL</Text>
+                                        <Text color={"gray"} fontWeight={"bold"} fontSize={"20px"} textDecoration={"underline"}>SUBTOTAL</Text>
                                         <Flex p={2} display={"flex"} justifyContent={"space-between"} alignItems="center" >
-                                            <Text p={2} as="s" color={"gray"}>Rs {total_original_price}</Text>
-                                            <Text p={2} color={"gray"}>Rs {total_final_price}</Text>
+                                            <Text p={2} fontSize={"18px"} fontWeight={800} color="green">Rs {total_final_price}</Text>
+                                            <Text p={2} as="s" color={"red" } fontSize={"16px"} fontWeight={600}>Rs {total_original_price}</Text>
                                         </Flex>
                                     </Flex>
                                     <DrawerFooter>

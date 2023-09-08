@@ -8,7 +8,7 @@ const PrivatePage = ({children}) => {
    const isAuth = useSelector((store) => store.authReducer.isAuth)
    const location  =useLocation()
    console.log("Token in private page =>",token,isAuth);
-    if(!token){
+    if(!isAuth){
       return <Navigate to={"/login"} replace state={{data:location.pathname}}/>
     }
 
