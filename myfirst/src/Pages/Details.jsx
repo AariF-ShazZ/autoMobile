@@ -4,10 +4,11 @@ import { useParams } from 'react-router-dom';
 import { getSingleProducts } from '../Redux/productReducer/actions';
 import { Box, Button, Flex, HStack, Heading, Image, Text, VStack } from '@chakra-ui/react';
 import { BsFillHeartFill } from "react-icons/bs"
-import { addToCart } from '../Redux/cartReducer/actions';
+import { addToCart, getCartProducts } from '../Redux/cartReducer/actions';
 const Details = () => {
-  const singleData = useSelector((store) => store.productsReducer.singleProduct);
-  // console.log("singleData", singleData);
+  const singleData = useSelector((store) => store.productsReducer.singleProduct) || {};
+  const cart = useSelector((store) => store.cartReducer.cart) || []
+  console.log("singleData", singleData);
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -16,6 +17,15 @@ const Details = () => {
       dispatch(getSingleProducts(id));
     }
   }, [dispatch, id]);
+
+
+  
+  useEffect(() =>  {
+    if(cart.length  ===0 ){
+      dispatch(getCartProducts())
+    }
+  },[dispatch,cart])
+
 
   const images = singleData.images || [];
   const sizes = singleData.sizes || [];
@@ -34,7 +44,9 @@ const Details = () => {
         ...singleData,size
       }
       // console.log("cart payload size=>", payload)
-  dispatch(addToCart(payload))
+     dispatch(addToCart(payload))
+     .then((res) =>  dispatch(getCartProducts()))
+     .catch((err) =>  console.log("Error Cart Post"))
     }
   return (
     <>

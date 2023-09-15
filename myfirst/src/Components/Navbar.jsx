@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import emptyCart from "../Images/emptyCart.webp"
 import {
     Box,
@@ -31,9 +31,10 @@ import {
     Textarea,
     Text,
     Icon,
-    Image
+    Image,
+    useToast
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, SearchIcon, AddIcon } from '@chakra-ui/icons'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import { AllRoutes } from "../AllRoutes/AllRoutes"
 import { HiShoppingCart } from "react-icons/hi"
 import { BsFillHeartFill } from "react-icons/bs"
@@ -47,49 +48,112 @@ import {
     DrawerContent,
     DrawerCloseButton,
 } from '@chakra-ui/react'
+
 import { useDispatch, useSelector } from "react-redux"
 import { RxCross2 } from "react-icons/rx";
-// import { decreaseQuantity, increaseQuantity, removeItem } from "../Redux/cartReducer/actions"
-import { searchProducts } from "../Redux/productReducer/actions"
 import SearchBox from "./SearchBox"
-import { decreaseQuantity, increaseQuantity, removeItem } from "../Redux/cartReducer/actions"
+import { decreaseCartQuantity, deleteCartProduct, getCartProducts, increaseCartQuantity } from "../Redux/cartReducer/actions"
+import { logout } from "../Redux/authReducer/actions"
 
 
 
 export default function Simple() {
-    const cart = useSelector((store) => store.cartReducer.cart)
-    // console.log("cart", cart);
+    const cart = useSelector((store) => store.cartReducer.cart) || []
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isTrue, setIsTrue] = useState(false)
     const btnRef = React.useRef()
     const [query, setQuery] = useState("")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const bgColor = useColorModeValue('#ffffff', '#fff');
+    const toast = useToast()
+
+    useEffect(() => {
+        if (cart.length === 0) {
+            dispatch(getCartProducts())
+        }
+    }, [dispatch, cart])
+
+    const getCartProductsData = () => {
+        dispatch(getCartProducts())
+    }
 
     const handleSubmit = () => {
-        // consoles.log("lajdkflsdj",query);
-        dispatch(searchProducts(query))
+        dispatch((query))
             .then((res) => navigate("/products"))
             .catch((err) => console.log("err", err))
     }
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const handleDecrease = (id, size, qty) => {
-        console.log("decrease =>",id,size);
-        if (qty > 1) {
-            dispatch(decreaseQuantity({ id, size, qty }))
+    const handleIncrease = (payload) => {
+        dispatch(increaseCartQuantity(payload))
+            .then((res) => toast({
+                title: 'Increase Quantity.',
+                description: `Cart Item Quantity Increased Successfully.`,
+                status: 'success',
+                duration: 1000,
+                isClosable: true,
+            }))
+            .catch((err) => toast({
+                title: 'Cart Item Error.',
+                description: `Cart Item Not Found.`,
+                status: 'error',
+                duration: 1000,
+                isClosable: true,
+            }))
+    }
+
+    const handleDecrease = (payload) => {
+        if (payload.qty > 1) {
+            dispatch(decreaseCartQuantity(payload))
+                .then((res) => toast({
+                    title: 'Decrease Quantity.',
+                    description: `Cart Item Quantity Decreased Successfully.`,
+                    status: 'success',
+                    duration: 1000,
+                    isClosable: true,
+                }))
+                .catch((err) => toast({
+                    title: 'Cart Item Error.',
+                    description: `Cart Item Not Found.`,
+                    status: 'error',
+                    duration: 1000,
+                    isClosable: true,
+                }))
         } else {
-            dispatch(removeItem({ id, size }))
+            dispatch(deleteCartProduct(payload._id))
+                .then((res) => toast({
+                    title: 'Cart Item Deleted.',
+                    description: `Cart Item Deleted Successfully.`,
+                    status: 'success',
+                    duration: 1000,
+                    isClosable: true,
+                }))
+                .catch((err) => toast({
+                    title: 'Cart Item Error.',
+                    description: `Cart Item Not Found.`,
+                    status: 'error',
+                    duration: 1000,
+                    isClosable: true,
+                }))
         }
     }
 
-    const handleIncrease = (id, size, qty) => {
-        console.log("increase =>",id,size);
-        dispatch(increaseQuantity({ id, size }))
-        // console.log(id,size)
-    }
-    const handleRemove = (id, size) => {
-        // console.log("id,size",id,size);
-        dispatch(removeItem({ id, size }))
+    const handleRemove = (id) => {
+        dispatch(deleteCartProduct(id))
+            .then((res) => toast({
+                title: 'Cart Item Deleted.',
+                description: `Cart Item Deleted Successfully.`,
+                status: 'success',
+                duration: 1000,
+                isClosable: true,
+            }))
+            .catch((err) => toast({
+                title: 'Cart Item Error.',
+                description: `Cart Item Not Found.`,
+                status: 'error',
+                duration: 1000,
+                isClosable: true,
+            }))
     }
 
     let total_final_price = 0
@@ -107,17 +171,22 @@ export default function Simple() {
         let result = Number(final_str)
         return result
     }
-    cart.forEach((prod) => {
-        console.log(convertToNumber(prod.original_price) * prod.qty)
+    cart.length > 0 && cart.forEach((prod) => {
+        // console.log(convertToNumber(prod.original_price) * prod.qty)
         total_original_price += convertToNumber(prod.original_price) * prod.qty
         total_final_price += convertToNumber(prod.final_price) * prod.qty
 
     })
 
+    const handleLogout = () => {
+        // console.log("Logout");
+        dispatch(logout())
+        // navigate('/login');
+    }
 
     return (
         <>
-            <Box bg={useColorModeValue('#ffffff', '#fff')} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>
+            <Box bg={bgColor} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <Box display={{ lg: "none" }}>
                         {
@@ -157,7 +226,10 @@ export default function Simple() {
                             <Box border={"2px solid #dfdfdf "} p={"10%"} borderRadius={"50%"}>
                                 <BsFillHeartFill cursor={"pointer"} color="#5e6c84" fontSize={"20px"} />
                             </Box>
-                            <Box border={"2px solid #dfdfdf"} p={"10%"} borderRadius={"50%"} onClick={onOpen}>
+                            <Box border={"2px solid #dfdfdf"} p={"10%"} borderRadius={"50%"} onClick={() => {
+                                getCartProductsData()
+                                onOpen()
+                            }}>
                                 <HiShoppingCart cursor={"pointer"} color="#5e6c84" fontSize={"23px"} />
                                 <Box
                                     position="absolute"
@@ -173,7 +245,7 @@ export default function Simple() {
                                     justifyContent="center"
                                     alignItems="center"
                                 >
-                                    {cart.length > 0 ? <Text color={"#fff"}>{cart.length}</Text>:0}
+                                    { cart && cart.length > 0 ? <Text color={"#fff"}>{cart.length}</Text> : 0}
                                 </Box>
                             </Box>
                             <Drawer
@@ -186,72 +258,73 @@ export default function Simple() {
                                 <DrawerOverlay />
                                 <DrawerContent bg={"#fff"}>
                                     <DrawerCloseButton />
-                                    <DrawerHeader color={"gray"} fontWeight={"bold"} fontSize={"25px"}> YOUR CART ({cart.length})</DrawerHeader>
+                                    <DrawerHeader color={"gray"} fontWeight={"bold"} fontSize={"25px"}> YOUR CART ({ cart && cart.length > 0 ? cart.length : 0})</DrawerHeader>
 
                                     <DrawerBody >
 
                                         {
-                                            cart.length > 0 ?
-                                              cart.map((item) => {
+                                            cart.length && cart.length > 0 ?
+                                                cart.map((item) => {
                                                     return <Flex key={item._id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.500"}>
                                                         <Image boxSize={"75px"} src={item.images[0]} alt="shoe" mr={"3%"} />
                                                         <Box >
                                                             <Flex justifyContent={"space-between"} align="center">
                                                                 <Text fontSize={"13px"}>{`${item.name} | ${item.color} | ${item.gender}`}</Text>
-                                                                <Icon boxSize={5} ml="5" as={RxCross2}  onClick={() => handleRemove(item._id, item.size)} cursor={"pointer"}/>
+                                                                <Icon boxSize={5} ml="5" as={RxCross2} onClick={() => handleRemove(item._id)} cursor={"pointer"} />
                                                             </Flex>
                                                             <Text as="sup">{item.size}</Text>
                                                             <Flex border={""} w={"100%"} align="center" justifyContent={"space-between"} >
                                                                 <Flex bg={""} w={"150px"} align={"center"} justify={"space-evenly"}>
-                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleDecrease(item._id, item.size, item.qty)}>-</Button>
+                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleDecrease(item)}>-</Button>
                                                                     <Button colorScheme="red" bg={"red"} color={"#fff"}>{item.qty}</Button>
-                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleIncrease(item._id, item.size, item.qty)}>+</Button>
+                                                                    <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleIncrease(item)}>+</Button>
                                                                 </Flex>
-                                                                <Flex w={"130px"}  m="4%"align="center" justifyContent={"space-between"} >
+                                                                <Flex w={"130px"} m="4%" align="center" justifyContent={"space-between"} >
                                                                     <Text fontSize={"18px"} fontWeight={"bold"}>Rs.{item.final_price}</Text>
                                                                     <Text as="s" fontWeight={"100"}>Rs.{item.original_price}</Text>
                                                                 </Flex>
                                                             </Flex>
                                                         </Box>
                                                     </Flex>
-                                                }) : <Image src={emptyCart} mt={"10%"}/>
+                                                }) : <Image src={emptyCart} mt={"10%"} />
                                         }
                                     </DrawerBody>
                                     <Flex display={"flex"} justifyContent={"space-between"} alignItems="center" m={2}>
                                         <Text color={"gray"} fontWeight={"bold"} fontSize={"20px"} textDecoration={"underline"}>SUBTOTAL</Text>
                                         <Flex p={2} display={"flex"} justifyContent={"space-between"} alignItems="center" >
                                             <Text p={2} fontSize={"18px"} fontWeight={800} color="green">Rs {total_final_price}</Text>
-                                            <Text p={2} as="s" color={"red" } fontSize={"16px"} fontWeight={600}>Rs {total_original_price}</Text>
+                                            <Text p={2} as="s" color={"red"} fontSize={"16px"} fontWeight={600}>Rs {total_original_price}</Text>
                                         </Flex>
                                     </Flex>
                                     <DrawerFooter>
-                                        <Button colorScheme='#ff0000' bg="#ff0000" color={"#fff"}>Proceed To Checkout</Button>
+
+                                        <Button colorScheme='#ff0000' bg="#ff0000" color={"#fff"} onClick={() => navigate("/checkout")} isDisabled={cart.length === 0}>{cart.length > 0 ? "Checkout" : "First Choose Products"}</Button>
                                     </DrawerFooter>
                                 </DrawerContent>
                             </Drawer>
                         </Flex>
 
                         <Menu>
-                            <Link to={"/login"}>
-                                <MenuButton
-                                    as={Button}
-                                    rounded={'full'}
-                                    variant={'link'}
-                                    cursor={'pointer'}
-                                    minW={0}>
-                                    <Avatar
-                                        size={'sm'}
-                                        src={
-                                            'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                        }
-                                    />
-                                </MenuButton>
-                            </Link>
+
+                            <MenuButton
+                                as={Button}
+                                rounded={'full'}
+                                variant={'link'}
+                                cursor={'pointer'}
+                                minW={0}>
+                                <Avatar
+                                    size={'sm'}
+                                    src={
+                                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                    }
+                                />
+                            </MenuButton>
                             <MenuList>
-                                <MenuItem>Link 1</MenuItem>
-                                <MenuItem>Link 2</MenuItem>
+                                <Link to={"/login"}>
+                                    <MenuItem>Authentication</MenuItem>
+                                </Link>
                                 <MenuDivider />
-                                <MenuItem>Link 3</MenuItem>
+                                <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
                             </MenuList>
                         </Menu>
                     </Flex>
@@ -283,8 +356,6 @@ export default function Simple() {
                 </Flex>
 
             </Box>
-
-            <Box p={4}> <AllRoutes /></Box>
         </>
     )
 }

@@ -18,46 +18,6 @@ const getProductsError = () => {
     }
 }
 
-const singleProductRequest = () => {
-    return{
-        type:types.SINGLE_PRODUCTS_REQUEST
-    }
-}
-
-
-const singleProductSuccess = (payload) => {
-    return {
-        type:types.SINGLE_PRODUCTS_SUCCESS,
-        payload
-    }
-}
-
-const singleProductError = () => {
-    return{
-        type:types.SINGLE_PRODUCTS_ERROR
-    }
-}
-
-const searchByQueryRequest = () => {
-    // console.log("payload",paylaod);
-    return {
-        type:types.SEARCH_QUERY_REQUEST
-    }
-}
-const searchByQuerySuccess = (payload) => {
-    console.log("payload",payload);
-    return {
-        type:types.SEARCH_QUERY_SUCCESS,
-        payload
-    }
-}
-const searchByQueryError = () => {
-    // console.log("payload",paylaod);
-    return {
-        type:types.SEARCH_QUERY_ERROR
-    }
-}
-
 export const getProducts = (page,params) => (dispatch) => {
     console.log("page",page);
     dispatch(getProductsRequest())
@@ -70,24 +30,125 @@ export const getProducts = (page,params) => (dispatch) => {
     .catch((err) =>  dispatch(getProductsError()))
 }
 
+const deleteProductsRequest = () => {
+    return {
+        type:types.DELETE_PRODUCT_REQUEST
+    }
+}
+const deleteProductsSuccess = (payload) => {
+    return {
+        type:types.DELETE_PRODUCT_SUCCESS,
+        payload
+    }
+}
+const deleteProductsError = () => {
+    return {
+        type:types.DELETE_PRODUCT_ERROR
+    }
+}
+
+
+export const deleteProduct = (id) => (dispatch) => {
+    console.log("delete id",id);
+    dispatch(deleteProductsRequest())
+    return axios.delete(`https://unusual-sandals-dog.cyclic.app/product//delete/${id}`)
+    .then((res) =>{  
+        console.log("res => ",res.data.remainingData);
+        dispatch(deleteProductsSuccess())
+    })
+    .catch((err) =>  dispatch(deleteProductsError()))
+}
+
+
+const postProductsRequest = () => {
+    return {
+        type:types.POST_PRODUCT_REQUEST
+    }
+}
+const postProductsSuccess = (payload) => {
+    return {
+        type:types.POST_PRODUCT_SUCCESS,
+        payload
+    }
+}
+const postProductsError = () => {
+    return {
+        type:types.POST_PRODUCT_ERROR
+    }
+}
+
+
+export const postProduct = (payload) => (dispatch) => {
+    console.log("post product",payload);
+    dispatch(postProductsRequest())
+    return axios.post(`https://unusual-sandals-dog.cyclic.app/product/create`,payload)
+    .then((res) =>{  
+        console.log("postProduct res => ",res);
+        dispatch(postProductsSuccess(res.data.data))
+    })
+    .catch((err) =>  dispatch(postProductsError()))
+}
+
+const singleProductRequest = () => {
+    return{
+        type:types.SINGLE_PRODUCT_REQUEST
+    }
+}
+
+
+const singleProductSuccess = (payload) => {
+    console.log("single product",payload);
+    return {
+        type:types.SINGLE_PRODUCT_SUCCESS,
+        payload
+    }
+}
+
+const singleProductError = () => {
+    return{
+        type:types.SINGLE_PRODUCT_ERROR
+    }
+}
+
+
 export const getSingleProducts = (id) => (dispatch) => {
+    // console.log("id",id);
     dispatch(singleProductRequest())
-    // return axios.get(`https://ill-teal-betta-garb.cyclic.app/product/read/${id}`
     return axios.get(`https://unusual-sandals-dog.cyclic.app/product/read/${id}`)
     .then((res) =>{  
-        // console.log("resksjdfkl => ",res.data);
-        dispatch(singleProductSuccess(res.data))
+        console.log("single res",res.data.data);
+        dispatch(singleProductSuccess(res.data.data))
     })
     .catch((err) =>  dispatch(singleProductError()))
 }
 
-export const searchProducts= (query) => (dispatch) => {
-    // console.log("query",query);
-    dispatch(searchByQueryRequest())
-    return axios.get(`https://green-hermit-crab-vest.cyclic.app/products?name=${query}`)
+const updateProductRequest = () => {
+    return{
+        type:types.UPDATE_PRODUCT_REQUEST
+    }
+}
+
+
+const updateProductSuccess = (payload) => {
+    return {
+        type:types.UPDATE_PRODUCT_SUCCESS,
+        payload
+    }
+}
+
+const updateProductError = () => {
+    return{
+        type:types.UPDATE_PRODUCT_ERROR
+    }
+}
+
+
+export const updateProducts = (id,payload) => (dispatch) => {
+    dispatch(updateProductRequest())
+    return axios.patch(`https://unusual-sandals-dog.cyclic.app/product/update/${id}`,payload)
     .then((res) =>{  
-        // console.log("search query => ",res.data);
-        dispatch(searchByQuerySuccess(res.data))
+        // console.log("update res",res);
+        dispatch(updateProductSuccess())
     })
-    .catch((err) =>  dispatch(searchByQueryError()))
+    .catch((err) =>  dispatch(updateProductError()))
 }

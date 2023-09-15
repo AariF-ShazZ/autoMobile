@@ -1,69 +1,105 @@
 import * as types from "./actionTypes"
 const initialState = {
     cart:[],
+    orders:[],
+    isLoadingCart:false,
+    isErrorCart:false
 }
 
 export const cartReducer = (state=initialState,{type,payload}) =>{
     // console.log("cart_reducer",payload,type);
      switch(type){
-    case types.ADD_TO_CART:{
-        
-        const isProduct = state.cart.find((ele) => {
-            return ele._id === payload._id && ele.size === payload.size
-        })
-        let newCart
-        if(isProduct){
-            newCart = state.cart.map((ele) => {
-                if( ele._id ==payload._id  && ele.size===payload.size){
-                    return {...ele,qty:ele.qty+1}
-                }else{
-                    return ele
-                }
-            })
-        }else{
-            const newPayload = {
-                ...payload,
-                qty:1
-            }
-            console.log("newPayload",newPayload);
-            newCart = [...state.cart,newPayload]
-        }
+    case types.ADD_TO_CART_REQUEST:{   
         return {
-            ...state,cart:newCart
+            ...state,isLoadingCart:true
+        }
+    }
+    case types.ADD_TO_CART_SUCCESS:{   
+        return {
+            ...state,cart:payload,isLoadingCart:false,isErrorCart:false
+        }
+    }
+    case types.ADD_TO_CART_ERROR:{   
+        return {
+            ...state,isLoadingCart:false,isErrorCart:true
         }
     }
 
-    case types.INCREASE_QUANTITY:{
-        let increaseQuantityItem =state.cart.map((ele) =>{
-            if(ele._id===payload.id && ele.size===payload.size){
-                return {...ele,qty:ele.qty+1}
-            }else {
-                return ele
-            }
-        } )
+    case types.GET_CART_PRODUCTS_REQUEST:{   
         return {
-            ...state,cart:increaseQuantityItem
+            ...state,isLoadingCart:true
         }
     }
-
-    case types.DECREASE_QUANTITY:{
-        let decreaseQuantityItem =state.cart.map((ele) =>{
-            if(ele._id===payload.id && ele.size===payload.size){
-                return {...ele,qty:ele.qty-1}
-            }else { 
-                return ele
-            }
-        } )
+    case types.GET_CART_PRODUCTS_SUCCESS:{   
         return {
-            ...state,cart:decreaseQuantityItem
+            ...state,cart:payload,isLoadingCart:false,isErrorCart:false
         }
     }
-    case types.REMOVE_ITEM:{
-        let updatedCart =state.cart.filter((ele) => !(ele._id===payload.id && ele.size===payload.size))
+    case types.GET_CART_PRODUCTS_ERROR:{   
         return {
-            ...state,cart:updatedCart
+            ...state,isLoadingCart:false,isErrorCart:true
         }
-
+    }
+    case types.DELETE_CART_PRODUCT_REQUEST:{   
+        return {
+            ...state,isLoadingCart:true
+        }
+    }
+    case types.DELETE_CART_PRODUCT_SUCCESS:{   
+        return {
+            ...state,cart:payload,isLoadingCart:false,isErrorCart:false
+        }
+    }
+    case types.DELETE_CART_PRODUCT_ERROR:{   
+        return {
+            ...state,isLoadingCart:false,isErrorCart:true
+        }
+    }
+    case types.INCREASE_CART_QUANTITY_REQUEST:{   
+        return {
+            ...state,isLoadingCart:true
+        }
+    }
+    case types.INCREASE_CART_QUANTITY_SUCCESS:{   
+        return {
+            ...state,cart:payload,isLoadingCart:false,isErrorCart:false
+        }
+    }
+    case types.INCREASE_CART_QUANTITY_ERROR:{   
+        return {
+            ...state,isLoadingCart:false,isErrorCart:true
+        }
+    }
+    case types.DECREASE_CART_QUANTITY_REQUEST:{   
+        return {
+            ...state,isLoadingCart:true
+        }
+    }
+    case types.DECREASE_CART_QUANTITY_SUCCESS:{   
+        return {
+            ...state,cart:payload,isLoadingCart:false,isErrorCart:false
+        }
+    }
+    case types.DECREASE_CART_QUANTITY_ERROR:{   
+        return {
+            ...state,isLoadingCart:false,isErrorCart:true
+        }
+    }
+    case types.ORDERS_GET_REQUEST:{   
+        return {
+            ...state,isLoadingCart:true
+        }
+    }
+    case types.ORDERS_GET_SUCCESS:{   
+        // console.log("ordeer reducer",payload);
+        return {
+            ...state,orders:payload,isLoadingCart:false,isErrorCart:false
+        }
+    }
+    case types.ORDERS_GET_ERROR:{   
+        return {
+            ...state,isLoadingCart:false,isErrorCart:true
+        }
     }
     default: return state
 }

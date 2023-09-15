@@ -5,7 +5,8 @@ const initialState = {
     isAuth:false,
     isLoading:false,
     isError:false,
-    errorMessage:{}
+    errorMessage:{},
+    usersData : []
 }
 
 export const authReducer = (state=initialState,{type,payload}) =>{
@@ -33,7 +34,7 @@ export const authReducer = (state=initialState,{type,payload}) =>{
     }
     case types.USER_LOGIN_SUCCESS:{
         return {
-            ...state,isLoading:false,user:payload.data,token:payload,isAuth:true
+            ...state,isLoading:false,user:payload.data,token:localStorage.getItem("token"),isAuth:true
         }
     }
     case types.USER_LOGIN_ERROR:{
@@ -41,9 +42,24 @@ export const authReducer = (state=initialState,{type,payload}) =>{
             ...state,isLoading:false,isError:true,errorMessage:payload
         }
     }
+    case types.GET_USER_REQUEST:{
+        return {
+            ...state,isLoading:true
+        }
+    }
+    case types.GET_USER_SUCCESS:{
+        return {
+            ...state,isLoading:false,usersData:payload
+        }
+    }
+    case types.GET_USER_ERROR:{
+        return {
+            ...state,isLoading:false,isError:true
+        }
+    }
     case types.USER_LOGOUT_SUCCESS:{
         return {
-            ...state,token:""
+            ...state,token:localStorage.getItem("token")
         }
     }
 

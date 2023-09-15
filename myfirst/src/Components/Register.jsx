@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import * as yup from 'yup';
 const schema = yup.object({
+   
     email: yup
         .string()
         .required()
@@ -62,44 +63,47 @@ const Register = () => {
   return (
     <>
           <Box p={10} maxWidth='400px' mx='auto' w={['100%', '80%']} h='400px' bg='transparent'>
-                  <Heading>Sign Up</Heading>
+                  <Heading color={"#fff"}>Sign Up</Heading>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <FormControl>
-                      <FormLabel>Name:</FormLabel>
+                      <FormLabel color={"#fff"}>Name:</FormLabel>
                       <Input
                         {...register('name')}
                         isInvalid
                         focusBorderColor='lime'
+                        color={"#e1e1e1"}
                         placeholder='Enter Name'
                       />
-                      <Text color='red.500' fontSize='sm'>
+                      <Text color='#ff0000' fontSize='sm'>
                         {errors.name?.message}
                       </Text>
                     </FormControl>
 
                     <FormControl>
-                      <FormLabel>Email:</FormLabel>
+                      <FormLabel color={"#fff"}>Email:</FormLabel>
                       <Input
                         {...register('email')}
                         isInvalid
                         focusBorderColor='lime'
+                        color={"#e1e1e1"}
                         placeholder='Enter Email'
                       />
-                      <Text color='red.500' fontSize='sm'>
+                      <Text color='#ff0000' fontSize='sm'>
                         {errors.email?.message}
                       </Text>
                     </FormControl>
 
                     <FormControl mt={4}>
-                      <FormLabel>Password:</FormLabel>
+                      <FormLabel color={"#fff"}>Password:</FormLabel>
                       <Input
                         type='password'
                         {...register('password')}
                         isInvalid
                         focusBorderColor='lime'
+                        color={"#e1e1e1"}
                         placeholder='Enter Password'
                       />
-                      <Text color='red.500' fontSize='sm'>
+                      <Text color='#ff0000' fontSize='sm'>
                         {errors.password?.message}
                       </Text>
                     </FormControl>

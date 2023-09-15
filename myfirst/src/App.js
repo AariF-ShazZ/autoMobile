@@ -6,11 +6,10 @@ import LargeWithLogoLeft from './Components/Footer';
 import { Box } from '@chakra-ui/react';
 
 function App() {
+
   return (
     <Box className="App" backgroundColor={"#f6f7f9"}>
-      <Simple/>
-      {/* <AllRoutes/> */}
-     <LargeWithLogoLeft/>
+      <AllRoutes/>
     </Box>
   );
 }
