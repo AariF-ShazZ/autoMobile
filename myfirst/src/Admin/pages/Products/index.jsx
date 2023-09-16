@@ -9,14 +9,15 @@ const Products = () => {
     const [changeComp, setChangeComp] = useState("read")
     return (
         <>
-            <Box border={"2px solid red"}
+            <Box 
+            // border={"2px solid red"}
                 p={"2%"}
                 top={0}
                 left={0}
                 w={"auto"}
-                h={"100vh"}
+                // h={"100vh"}
             >
-                <Tabs variant='soft-rounded' colorScheme='green'>
+                <Tabs variant='soft-rounded' colorScheme={"red"}>
                     <TabList>
                         <Tab>Read Products</Tab>
                         <Tab>Post Products</Tab>

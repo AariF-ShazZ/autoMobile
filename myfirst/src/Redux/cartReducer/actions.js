@@ -178,10 +178,7 @@ const orderPostError = () => {
 
 export const orderPost = (payload) => (dispatch) => {
     dispatch(orderPostRequest())
-    return axios.post(`https://unusual-sandals-dog.cyclic.app/order/create`,payload,{
-        headers: {
-        'Authorization': `${localStorage.getItem("token")}`, 
-      }})
+    return axios.post(`https://unusual-sandals-dog.cyclic.app/order/create`,payload)
     .then((res) =>{  
         // console.log("order res",res);
         dispatch(orderPostSuccess())
@@ -213,10 +210,7 @@ const ordersGetError = () => {
 
 export const ordersGet = () => (dispatch) => {
     dispatch(ordersGetRequest())
-    return axios.get(`https://unusual-sandals-dog.cyclic.app/order/read`,{
-        headers: {
-        'Authorization': `${localStorage.getItem("token")}`, 
-      }})
+    return axios.get(`https://unusual-sandals-dog.cyclic.app/order/read`)
     .then((res) =>{  
         console.log("order res get",res.data.data);
         dispatch(ordersGetSuccess(res.data.data))

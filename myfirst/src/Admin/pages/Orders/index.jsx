@@ -45,7 +45,7 @@ function Orders () {
         setPage(newPage);
         setOrders(sliceData(all_orders, newPage, 5));
     };
-
+ console.log("all_orders",all_orders);
     return(
         <div className='dashboard-content'>
             <DashboardHeader
@@ -68,8 +68,7 @@ function Orders () {
                     <thead>
                         <th>S.NO</th>
                         <th>ID</th>
-                        <th>DATE</th>
-                        <th>STATUS</th>
+                        <th>USER ID</th>
                         <th>COSTUMER</th>
                         <th>PRODUCT</th>
                         <th>REVENUE</th>
@@ -81,40 +80,18 @@ function Orders () {
                                 <tr key={index}>
                                     <td><span>{index+1}</span></td>
                                     <td><span>{order._id}</span></td>
-                                    {/* <td>
-                                        <div>
-                                            {order.status === 'Paid' ?
-                                                <img
-                                                    src={DoneIcon}
-                                                    alt='paid-icon'
-                                                    className='dashboard-content-icon' />
-                                            : order.status === 'Canceled' ?
-                                                <img
-                                                    src={CancelIcon}
-                                                    alt='canceled-icon'
-                                                    className='dashboard-content-icon' />
-                                            : order.status === 'Refunded' ?
-                                                <img
-                                                    src={RefundedIcon}
-                                                    alt='refunded-icon'
-                                                    className='dashboard-content-icon' />
-                                            : null}
-                                            <span>{order.status}</span>
-                                        </div>
-                                    </td> */}
+                                    <td><span>{order.userID}</span></td>
                                     <td>
-                                        <div>
-                                            <span>{order.username}</span>
-                                        </div>
+                                            {order.username}
+                                
                                     </td>
                                     <td><span>{order.totalProducts}</span></td>
-                                    <td><span>${order.amount}</span></td>
+                                    <td><span>Rs.{order.amount}</span></td>
                                 </tr>
                             ))}
                         </tbody>
                     : null}
                 </table>
-
                 {orders.length !== 0 ?
                     <div className='dashboard-content-footer'>
                         {pagination.map((item, index) => (

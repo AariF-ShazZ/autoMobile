@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import SideBarItem from './sidebar-item';
 
@@ -7,10 +7,13 @@ import './styles.css';
 // import logo from '../../assets/images/white-logo.png';
 import LogoutIcon from '../../assets/icons/logout.svg';
 import { Heading } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../Redux/authReducer/actions';
 
 function SideBar ({ menu }) {
     const location = useLocation();
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [active, setActive] = useState(1);
 
     useEffect(() => {
@@ -23,6 +26,12 @@ function SideBar ({ menu }) {
 
     const __navigate = (id) => {
         setActive(id);
+    }
+
+    const handleLogout = () => {
+// console.log("logout");
+        dispatch(logout());
+        navigate('/login');
     }
 
     return(
@@ -46,7 +55,7 @@ function SideBar ({ menu }) {
                         ))}
                     </div>
 
-                    <div className='sidebar-footer'>
+                    <div className='sidebar-footer' onClick={() => handleLogout()}>
                         <span className='sidebar-item-label'>Logout</span>
                         <img 
                             src={LogoutIcon}

@@ -4,7 +4,7 @@ import ProductForm from '../Form'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSingleProducts } from '../../../Redux/productReducer/actions'
 
-const ProductsUpdate = () => {
+const ProductsUpdate = ({onClose}) => {
   const singleUpdate = useSelector((store) =>store.productsReducer.singleProduct)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -16,7 +16,7 @@ const ProductsUpdate = () => {
   return (
     <div>
        <Box>
-        <ProductForm data ={singleUpdate} type={"update"}/>
+        <ProductForm onClose={onClose} data ={singleUpdate} type={"update"}/>
         </Box>
     </div>
   )

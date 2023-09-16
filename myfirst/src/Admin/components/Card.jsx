@@ -60,7 +60,7 @@ export default function Card(props) {
     const deleteItem = (id) => {
         dispatch(deleteProduct(id))
             .then((res) => {
-                console.log("res card", res);
+                console.log("res card", res);    
                 toast({
                     title: 'Product Deleted.',
                     description: `Deleted the Product whose id is ${id}.`,
@@ -264,7 +264,7 @@ export default function Card(props) {
                                         <ModalHeader color={"#171923"}>Edit Product</ModalHeader>
                                         <ModalCloseButton color={"#171923"} />
                                         <ModalBody>
-                                           <ProductUpdate/>
+                                           <ProductUpdate onClose={closeEditModal}/>
                                         </ModalBody>
                                         <ModalFooter>
                                             {/* Add buttons and actions for saving or canceling the edit */}

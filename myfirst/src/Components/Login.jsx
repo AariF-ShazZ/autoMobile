@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../Redux/authReducer/actions';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -11,6 +11,8 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Select,
   Text,
   useToast,
@@ -43,6 +45,8 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
+  const [show, setShow] = useState(false)
+  const handleClick = () => setShow(!show)
   const toast = useToast();
 
   const onSubmit = (data) => {
@@ -54,7 +58,7 @@ const Login = () => {
     }))
       .then((res) => {
         navigate(comingFrom, { replace: true })
-        console.log("login success");
+        console.log("Login success");
       })
       .catch((err) => {
         console.log("Login Failed", err);
@@ -103,14 +107,22 @@ const Login = () => {
 
         <FormControl mt={4}>
           <FormLabel color={"#fff"}>Password:</FormLabel>
-          <Input
-            type='password'
-            {...register('password')}
-            isInvalid={!!errors.password}
-            focusBorderColor='lime'
-            color={"#e1e1e1"}
-            placeholder='Enter Password'
-          />
+           <InputGroup size="md">
+            <Input
+              // type='password'
+              type={show ? 'text' : 'password'}
+              {...register('password')}
+              isInvalid={!!errors.password}
+              focusBorderColor='lime'
+              color={"#e1e1e1"}
+              placeholder='Enter Password'
+            />
+            <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? 'Hide' : 'Show'}
+                </Button>
+              </InputRightElement>
+              </InputGroup>
           <Text color='#ff0000' fontSize='sm'>
             {errors.password?.message}
           </Text>

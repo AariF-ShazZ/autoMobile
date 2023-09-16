@@ -57,7 +57,7 @@ import { logout } from "../Redux/authReducer/actions"
 
 
 
-export default function Simple() {
+export default function Navbar() {
     const cart = useSelector((store) => store.cartReducer.cart) || []
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [isTrue, setIsTrue] = useState(false)
@@ -67,7 +67,7 @@ export default function Simple() {
     const navigate = useNavigate()
     const bgColor = useColorModeValue('#ffffff', '#fff');
     const toast = useToast()
-
+    const userType = JSON.parse(localStorage.getItem("userType")) || { usertype: "user" };
     useEffect(() => {
         if (cart.length === 0) {
             dispatch(getCartProducts())
@@ -179,9 +179,8 @@ export default function Simple() {
     })
 
     const handleLogout = () => {
-        // console.log("Logout");
-        dispatch(logout())
-        // navigate('/login');
+        dispatch(logout());
+        navigate('/login');
     }
 
     return (
@@ -245,7 +244,7 @@ export default function Simple() {
                                     justifyContent="center"
                                     alignItems="center"
                                 >
-                                    { cart && cart.length > 0 ? <Text color={"#fff"}>{cart.length}</Text> : 0}
+                                    {cart && cart.length > 0 ? <Text color={"#fff"}>{cart.length}</Text> : 0}
                                 </Box>
                             </Box>
                             <Drawer
@@ -258,7 +257,7 @@ export default function Simple() {
                                 <DrawerOverlay />
                                 <DrawerContent bg={"#fff"}>
                                     <DrawerCloseButton />
-                                    <DrawerHeader color={"gray"} fontWeight={"bold"} fontSize={"25px"}> YOUR CART ({ cart && cart.length > 0 ? cart.length : 0})</DrawerHeader>
+                                    <DrawerHeader color={"gray"} fontWeight={"bold"} fontSize={"25px"}> YOUR CART ({cart && cart.length > 0 ? cart.length : 0})</DrawerHeader>
 
                                     <DrawerBody >
 
@@ -304,21 +303,31 @@ export default function Simple() {
                             </Drawer>
                         </Flex>
 
-                        <Menu>
 
-                            <MenuButton
-                                as={Button}
-                                rounded={'full'}
-                                variant={'link'}
-                                cursor={'pointer'}
-                                minW={0}>
-                                <Avatar
-                                    size={'sm'}
-                                    src={
-                                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                    }
-                                />
-                            </MenuButton>
+                        <Menu>
+                            {userType.usertype == "user" ? (
+                                <MenuButton
+                                    as={Button}
+                                    rounded={'full'}
+                                    variant={'link'}
+                                    cursor={'pointer'}
+                                    minW={0}
+                                >
+                                    <Avatar
+                                        size={'sm'}
+                                        src={
+                                            'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                        }
+                                    />
+                                </MenuButton>
+                            ) :  (
+                                <Button m={"0% 5%"} onClick={() =>{ 
+                                    localStorage.setItem("pageValue","admin")
+                                    window.location.reload();
+                                }} color={"white"} bg={"red"}  colorScheme="red">ADMIN</Button>
+                            ) 
+                        
+                        }
                             <MenuList>
                                 <Link to={"/login"}>
                                     <MenuItem>Authentication</MenuItem>
@@ -327,6 +336,7 @@ export default function Simple() {
                                 <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
                             </MenuList>
                         </Menu>
+
                     </Flex>
                 </Flex>
                 <Flex h={16} mt={"-3%"} mb={"2%"} alignItems={'center'} justifyContent={'space-between'} display={{
@@ -362,10 +372,8 @@ export default function Simple() {
 
 function InitialFocus() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
     const initialRef = useRef(null)
     const finalRef = useRef(null)
-
     return (
         <>
             <Button onClick={onOpen}>Close</Button>
@@ -384,13 +392,11 @@ function InitialFocus() {
                             <FormLabel>First name</FormLabel>
                             <Input ref={initialRef} placeholder='First name' />
                         </FormControl>
-
                         <FormControl mt={4}>
                             <FormLabel>Last name</FormLabel>
                             <Input placeholder='Last name' />
                         </FormControl>
                     </ModalBody>
-
                     <ModalFooter>
                         <Button colorScheme='blue' mr={3}>
                             Save

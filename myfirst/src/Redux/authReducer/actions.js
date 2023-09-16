@@ -54,8 +54,17 @@ export const login  = (payload) => (dispatch) => {
   return  axios.post("https://unusual-sandals-dog.cyclic.app/user/login",payload)
     .then((res) => {
         console.log("login",res.data.data);
-        localStorage.setItem("user",res.data)
-        localStorage.setItem("token",res.data.token)
+        // Convert the user data object to a JSON string
+        const userDataString = JSON.stringify(res.data.data);
+
+        localStorage.setItem("userType", userDataString);
+        
+        // Check if the user is not an admin before storing the token
+        if (res.data.data.usertype !== "admin") {
+            localStorage.setItem("token", res.data.token);
+            localStorage.removeItem("userType")
+        }
+
         dispatch(loginSuccess())
     })
     .catch((err) => dispatch(loginError()))
@@ -128,6 +137,8 @@ const logoutSuccess = () => {
 
 
 export const logout = () => (dispatch) => {
-    localStorage.setItem("token","")
+    localStorage.removeItem("token")
+    localStorage.setItem("pageValue","user")
+    localStorage.removeItem("userType")
     dispatch(logoutSuccess())
 }

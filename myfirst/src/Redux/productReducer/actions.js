@@ -152,3 +152,32 @@ export const updateProducts = (id,payload) => (dispatch) => {
     })
     .catch((err) =>  dispatch(updateProductError()))
 }
+
+const getAllProductsRequest = () => {
+    return {
+        type:types.GET_ALL_PRODUCTS_REQUEST
+    }
+}
+const getAllProductsSuccess = (payload) => {
+    return {
+        type:types.GET_ALL_PRODUCTS_SUCCESS,
+        payload
+    }
+}
+const getAllProductsError = () => {
+    return {
+        type:types.GET_ALL_PRODUCTS_ERROR
+    }
+}
+
+export const getAllProducts = (page,params) => (dispatch) => {
+    console.log("page",page);
+    dispatch(getAllProductsRequest())
+    // return axios.get(`https://ill-cyan-buffalo-kilt.cyclic.app/products?_page=${page}&_limit=10`,params)
+    return axios.get(`https://unusual-sandals-dog.cyclic.app/product/all`)
+    .then((res) =>{  
+        console.log("get all products res => ",res.data.productResult);
+        dispatch(getAllProductsSuccess(res.data.productResult))
+    })
+    .catch((err) =>  dispatch(getAllProductsError()))
+}

@@ -12,14 +12,14 @@ const Users = () => {
     const usersData = useSelector((store) => store.authReducer.usersData)
     console.log("usersData",usersData);
     const [search, setSearch] = useState('');
-    const [orders, setOrders] = useState(all_orders);
+    const [orders, setOrders] = useState(usersData);
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState([]);
     const dispatch = useDispatch()
 
     useEffect(() => {
-        setPagination(calculateRange(all_orders, 5));
-        setOrders(sliceData(all_orders, page, 5));
+        setPagination(calculateRange(usersData, 5));
+        setOrders(sliceData(usersData, page, 5));
         if(usersData.length === 0)dispatch(getUsersData())
         
     }, [dispatch, usersData]);
@@ -42,7 +42,7 @@ const Users = () => {
     // Change Page 
     const __handleChangePage = (new_page) => {
         setPage(new_page);
-        setOrders(sliceData(all_orders, new_page, 5));
+        setOrders(sliceData(usersData, new_page, 5));
     }
 
     const handleUserDelete = (id) => {

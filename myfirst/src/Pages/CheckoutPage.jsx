@@ -137,9 +137,10 @@ export const CheckoutPage = () => {
       userDetails = user;
     }
   }
-  // console.log("userDetails", userDetails);
+  console.log("userDetails", userDetails);
   // console.log("userInfo", userInfo);
   const payload = {
+    userID: userDetails?._id,
     city: userInfo.city,
     state: userInfo.state,
     username: userDetails?.username,
@@ -147,17 +148,17 @@ export const CheckoutPage = () => {
     amount: total_final_price,
   }
 
-const storeOrder = () => {
-  console.log("order  payload",payload);
-  if( userInfo.city && userInfo.state && userDetails?.username &&  cart.length && total_final_price){
-    dispatch(orderPost(payload))
-    setOverlay(<OverlayTwo />);
-    onOpen();
-  }else {
-    alert("Please Fill All Fields")
+  
+  const storeOrder = () => {
+    console.log("order  payload", payload);
+    if (userInfo.city && userInfo.state && userDetails?.username && cart.length && total_final_price) {
+      dispatch(orderPost(payload))
+      setOverlay(<OverlayTwo />);
+      onOpen();
+    } else {
+      alert("Please Fill All Fields")
+    }
   }
- 
-}
 
   return (
     <Box>
