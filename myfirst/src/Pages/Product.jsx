@@ -106,7 +106,7 @@ const Product = () => {
       <Flex  alignItems={"center"} justifyContent={"center"}>
         <Box display={"flex"} w={"15%"} alignItems={"center"} justifyContent={"space-between"} sx={{ margin: "30px 0px" }}>
           {/* <Pagination count={Math.ceil(currentPage.count / pageSize)} color="secondary" onChange={hanldeChange} /> */}
-          <Button onClick={() => setPage((prev) => prev - 1)} colorScheme='#f00' bg={"#f00"} color={"#fff"}>Prev</Button>
+          <Button onClick={() => setPage((prev) => prev - 1)} isDisabled={page === 1} colorScheme='#f00' bg={"#f00"} color={"#fff"}>Prev</Button>
           <Button  color={"#f00"}>{page}</Button>
           <Button onClick={() => setPage((next) => next + 1)} colorScheme='#f00' bg={"#f00"} color={"#fff"}>Next</Button>
         </Box>
