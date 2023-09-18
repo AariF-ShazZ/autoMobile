@@ -174,8 +174,6 @@ const orderPostError = () => {
         type:types.ORDER_POST_ERROR
     }
 }
-
-
 export const orderPost = (payload) => (dispatch) => {
     dispatch(orderPostRequest())
     return axios.post(`https://unusual-sandals-dog.cyclic.app/order/create`,payload)

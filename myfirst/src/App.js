@@ -10,6 +10,7 @@ function App() {
     <Box className="App" backgroundColor={"#f6f7f9"}>
       {/* <Simple/> */}
       <AllRoutes/>
+      
      {/* <LargeWithLogoLeft/> */}
     </Box>
   );

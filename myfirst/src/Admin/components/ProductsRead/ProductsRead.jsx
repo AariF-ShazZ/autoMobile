@@ -6,7 +6,7 @@ const ProductsRead = () => {
     return (
         <>
             <Box bg={""} p={"3% 2%"}>
-                <ProductsList />
+                <ProductsList type={"admin"} />
             </Box>
         </>
     )
