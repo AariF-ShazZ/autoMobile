@@ -19,12 +19,9 @@ const getProductsError = () => {
 }
 
 export const getProducts = (page,params) => (dispatch) => {
-    console.log("page",page);
     dispatch(getProductsRequest())
-    // return axios.get(`https://ill-cyan-buffalo-kilt.cyclic.app/products?_page=${page}&_limit=10`,params)
-    return axios.get(`https://unusual-sandals-dog.cyclic.app/product/read?page=${page}&limit=10`,params)
+    return axios.get(`https://shoesbackend.onrender.com/product/read?page=${page}&limit=10`,params)
     .then((res) =>{  
-        console.log("res => ",res.data.data);
         dispatch(getProductsSuccess(res.data.data))
     })
     .catch((err) =>  dispatch(getProductsError()))
@@ -49,11 +46,9 @@ const deleteProductsError = () => {
 
 
 export const deleteProduct = (id) => (dispatch) => {
-    console.log("delete id",id);
     dispatch(deleteProductsRequest())
-    return axios.delete(`https://unusual-sandals-dog.cyclic.app/product//delete/${id}`)
+    return axios.delete(`https://shoesbackend.onrender.com/product//delete/${id}`)
     .then((res) =>{  
-        console.log("res => ",res.data.remainingData);
         dispatch(deleteProductsSuccess())
     })
     .catch((err) =>  dispatch(deleteProductsError()))
@@ -79,11 +74,9 @@ const postProductsError = () => {
 
 
 export const postProduct = (payload) => (dispatch) => {
-    console.log("post product",payload);
     dispatch(postProductsRequest())
-    return axios.post(`https://unusual-sandals-dog.cyclic.app/product/create`,payload)
+    return axios.post(`https://shoesbackend.onrender.com/product/create`,payload)
     .then((res) =>{  
-        console.log("postProduct res => ",res);
         dispatch(postProductsSuccess(res.data.data))
     })
     .catch((err) =>  dispatch(postProductsError()))
@@ -112,11 +105,9 @@ const singleProductError = () => {
 
 
 export const getSingleProducts = (id) => (dispatch) => {
-    // console.log("id",id);
     dispatch(singleProductRequest())
-    return axios.get(`https://unusual-sandals-dog.cyclic.app/product/read/${id}`)
+    return axios.get(`https://shoesbackend.onrender.com/product/read/${id}`)
     .then((res) =>{  
-        console.log("single res",res.data.data);
         dispatch(singleProductSuccess(res.data.data))
     })
     .catch((err) =>  dispatch(singleProductError()))
@@ -145,9 +136,8 @@ const updateProductError = () => {
 
 export const updateProducts = (id,payload) => (dispatch) => {
     dispatch(updateProductRequest())
-    return axios.patch(`https://unusual-sandals-dog.cyclic.app/product/update/${id}`,payload)
+    return axios.patch(`https://shoesbackend.onrender.com/product/update/${id}`,payload)
     .then((res) =>{  
-        // console.log("update res",res);
         dispatch(updateProductSuccess())
     })
     .catch((err) =>  dispatch(updateProductError()))
@@ -170,13 +160,10 @@ const getAllProductsError = () => {
     }
 }
 
-export const getAllProducts = (page,params) => (dispatch) => {
-    console.log("page",page);
+export const getAllProducts = () => (dispatch) => {
     dispatch(getAllProductsRequest())
-    // return axios.get(`https://ill-cyan-buffalo-kilt.cyclic.app/products?_page=${page}&_limit=10`,params)
-    return axios.get(`https://unusual-sandals-dog.cyclic.app/product/all`)
+    return axios.get(`https://shoesbackend.onrender.com/product/all`)
     .then((res) =>{  
-        console.log("get all products res => ",res.data.productResult);
         dispatch(getAllProductsSuccess(res.data.productResult))
     })
     .catch((err) =>  dispatch(getAllProductsError()))

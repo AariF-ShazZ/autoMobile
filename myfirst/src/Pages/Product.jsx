@@ -111,8 +111,6 @@ const Product = () => {
           <Button onClick={() => setPage((next) => next + 1)} colorScheme='#f00' bg={"#f00"} color={"#fff"}>Next</Button>
         </Box>
       </Flex>
-
-
     </>
   )
 }

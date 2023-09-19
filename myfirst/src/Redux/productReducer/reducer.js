@@ -8,8 +8,7 @@ const initialState = {
 }
 
 export const productsReducer = (state=initialState,{type,payload}) =>{
-   
-    console.log("productsReducer => ",type,payload);
+
     switch(type){
     case types.GET_PRODUCTS_REQUEST:{
         return {
@@ -33,7 +32,6 @@ export const productsReducer = (state=initialState,{type,payload}) =>{
         }
     }
     case types.SINGLE_PRODUCT_SUCCESS:{
-        console.log("single reducer",payload);
         return {
             ...state,
             singleProduct: payload
@@ -51,7 +49,6 @@ export const productsReducer = (state=initialState,{type,payload}) =>{
         }
     }
     case types.GET_ALL_PRODUCTS_SUCCESS:{
-        // console.log("search reducer",type,payload);
         return {
             ...state,allProducts:payload
         }

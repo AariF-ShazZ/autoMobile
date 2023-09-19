@@ -18,15 +18,14 @@ export const addToCartError = () => {
 }
 
 export const addToCart = (payload) => (dispatch) => {
-    console.log("cart post payload",payload);
+
     dispatch(addToCartRequest())
-    return axios.post(`https://unusual-sandals-dog.cyclic.app/cart/create`,payload,  {
+    return axios.post(`https://shoesbackend.onrender.com/cart/create`,payload,  {
         headers: {
         'Authorization': `${localStorage.getItem("token")}`, 
       }})
     .then((res) =>{
-        console.log("cart post => ",res);
-        // dispatch(addToCartSuccess())
+        dispatch(addToCartSuccess())
     } ).catch((err) => dispatch(addToCartError()))
 }
 
@@ -51,12 +50,11 @@ export const getCartProductsError = () => {
 export const getCartProducts = () => (dispatch) => {
 
     dispatch(getCartProductsRequest())
-    return axios.get(`https://unusual-sandals-dog.cyclic.app/cart/read`, {
+    return axios.get(`https://shoesbackend.onrender.com/cart/read`, {
         headers: {
         'Authorization': `${localStorage.getItem("token")}`, 
       }})
     .then((res) =>{
-        console.log("cart get products => ",res.data.data);
         dispatch(getCartProductsSuccess(res.data.data))
     } ).catch((err) => dispatch(getCartProductsError()))
 }
@@ -83,12 +81,11 @@ export const delteteCartProductError = () => {
 export const deleteCartProduct = (id) => (dispatch) => {
 
     dispatch(getCartProductsRequest())
-    return axios.delete(`https://unusual-sandals-dog.cyclic.app/cart/delete/${id}`, {
+    return axios.delete(`https://shoesbackend.onrender.com/cart/delete/${id}`, {
         headers: {
         'Authorization': `${localStorage.getItem("token")}`, 
       }})
     .then((res) =>{
-        console.log("cart delete products => ",res.data.data);
         dispatch(getCartProductsSuccess(res.data.data))
     } ).catch((err) => dispatch(getCartProductsError()))
 }
@@ -114,12 +111,11 @@ export const increaseCartQuantityError = () => {
 export const increaseCartQuantity = (payload) => (dispatch) => {
 
     dispatch(increaseCartQuantityRequest())
-    return axios.post(`https://unusual-sandals-dog.cyclic.app/cart/increaseQty/`, payload,{
+    return axios.post(`https://shoesbackend.onrender.com/cart/increaseQty/`, payload,{
         headers: {
         'Authorization': `${localStorage.getItem("token")}`, 
       }})
     .then((res) =>{
-        console.log("cart increase products => ",res.data.data);
         dispatch(increaseCartQuantitySuccess(res.data.data))
     } ).catch((err) => dispatch(increaseCartQuantityError()))
 }
@@ -144,12 +140,11 @@ export const decreaseCartQuantityError = () => {
 export const decreaseCartQuantity = (payload) => (dispatch) => {
 
     dispatch(decreaseCartQuantityRequest())
-    return axios.post(`https://unusual-sandals-dog.cyclic.app/cart/decreaseQty/`, payload,{
+    return axios.post(`https://shoesbackend.onrender.com/cart/decreaseQty/`, payload,{
         headers: {
         'Authorization': `${localStorage.getItem("token")}`, 
       }})
     .then((res) =>{
-        console.log("cart decrease products => ",res.data.data);
         dispatch(decreaseCartQuantitySuccess(res.data.data))
     } ).catch((err) => dispatch(decreaseCartQuantityError()))
 }
@@ -176,9 +171,8 @@ const orderPostError = () => {
 }
 export const orderPost = (payload) => (dispatch) => {
     dispatch(orderPostRequest())
-    return axios.post(`https://unusual-sandals-dog.cyclic.app/order/create`,payload)
+    return axios.post(`https://shoesbackend.onrender.com/order/create`,payload)
     .then((res) =>{  
-        // console.log("order res",res);
         dispatch(orderPostSuccess())
     })
     .catch((err) =>  dispatch(orderPostError()))
@@ -208,9 +202,8 @@ const ordersGetError = () => {
 
 export const ordersGet = () => (dispatch) => {
     dispatch(ordersGetRequest())
-    return axios.get(`https://unusual-sandals-dog.cyclic.app/order/read`)
+    return axios.get(`https://shoesbackend.onrender.com/order/read`)
     .then((res) =>{  
-        console.log("order res get",res.data.data);
         dispatch(ordersGetSuccess(res.data.data))
     })
     .catch((err) =>  dispatch(ordersGetError()))

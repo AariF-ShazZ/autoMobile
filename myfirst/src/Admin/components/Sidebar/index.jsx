@@ -32,6 +32,7 @@ function SideBar ({ menu }) {
 // console.log("logout");
         dispatch(logout());
         navigate('/login');
+        window.location.reload()
     }
 
     return(

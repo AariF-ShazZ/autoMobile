@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getSingleProducts } from '../Redux/productReducer/actions';
-import { Box, Button, Flex, HStack, Heading, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Heading, Image, Text, VStack, useToast } from '@chakra-ui/react';
 import { BsFillHeartFill } from "react-icons/bs"
 import { addToCart, getCartProducts } from '../Redux/cartReducer/actions';
 const Details = () => {
@@ -11,7 +11,7 @@ const Details = () => {
   console.log("singleData", singleData);
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const toast = useToast()
   useEffect(() => {
     if (id) {
       dispatch(getSingleProducts(id));
@@ -19,12 +19,12 @@ const Details = () => {
   }, [dispatch, id]);
 
 
-  
-  useEffect(() =>  {
-    if(cart.length  ===0 ){
+
+  useEffect(() => {
+    if (cart.length === 0) {
       dispatch(getCartProducts())
     }
-  },[dispatch,cart])
+  }, [dispatch, cart])
 
 
   const images = singleData.images || [];
@@ -41,13 +41,22 @@ const Details = () => {
 
   const handleAddToCart = () => {
     let payload = {
-        ...singleData,size
-      }
-      // console.log("cart payload size=>", payload)
-     dispatch(addToCart(payload))
-     .then((res) =>  dispatch(getCartProducts()))
-     .catch((err) =>  console.log("Error Cart Post"))
+      ...singleData, size
     }
+    // console.log("cart payload size=>", payload)
+    dispatch(addToCart(payload))
+      .then((res) => {
+        dispatch(getCartProducts())
+        toast({
+          title: "Add To Cart.",
+          description: `Product Added To The Cart Successfully.`,
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        })
+      })
+      .catch((err) => console.log("Error Cart Post"))
+  }
   return (
     <>
       <Box w="100%" bg="" p="4% 2%">
@@ -86,7 +95,7 @@ const Details = () => {
             <Flex p={"1% 2%"} alignItems={"center"} justifyContent={"space-evenly"} w={{ base: "190px" }} bg={""} >
               <Heading ml={{ base: "-22%", sm: "-22%", md: "-9%", lg: "-7%" }} color={"red"} fontSize={{ base: "15px", sm: "16px", md: "23px", lg: "23px" }}>Rs. {finalPrice}</Heading>
               <Heading fontSize={{ base: "12px", sm: "13px", md: "19px", lg: "19px" }} as="strike" color={"#db3f3f"}>
-                Rs. {singleData.original_price }
+                Rs. {singleData.original_price}
               </Heading>
             </Flex>
             <Text color={"gray"}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita modi mollitia, itaque fugiat quisquam facere, animi atque nesciunt debitis tempora error fugit similique </Text>

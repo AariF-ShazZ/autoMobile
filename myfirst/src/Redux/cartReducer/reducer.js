@@ -7,7 +7,6 @@ const initialState = {
 }
 
 export const cartReducer = (state=initialState,{type,payload}) =>{
-    // console.log("cart_reducer",payload,type);
      switch(type){
     case types.ADD_TO_CART_REQUEST:{   
         return {
@@ -91,7 +90,6 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
         }
     }
     case types.ORDERS_GET_SUCCESS:{   
-        // console.log("ordeer reducer",payload);
         return {
             ...state,orders:payload,isLoadingCart:false,isErrorCart:false
         }

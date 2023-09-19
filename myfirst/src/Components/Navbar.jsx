@@ -360,7 +360,7 @@ export default function Navbar() {
                                     localStorage.setItem("pageValue", "admin")
                                     navigate("/admin/dashboard")
                                     window.location.reload();
-                                }} color={"red"} bg={"red"} colorScheme="red" />
+                                }} color={"red"} bg={"red"} colorScheme="red"  cursor={"pointer"}/>
                             )}
                             <MenuList>
                                 <Link to={"/login"}>

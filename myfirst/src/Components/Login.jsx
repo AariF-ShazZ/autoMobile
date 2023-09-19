@@ -82,7 +82,8 @@ const Login = () => {
             {...register('usertype')}
             isInvalid={!!errors.usertype}
             focusBorderColor='lime'
-            color={"#e1e1e1"}
+            color={"gray.400"} 
+
           >
             <option value="admin">ADMIN</option>
             <option value="user">USER</option>

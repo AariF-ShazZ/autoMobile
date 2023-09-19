@@ -19,12 +19,10 @@ const registerError  = () => {
 }
 
 export const registerAction  = (payload) => (dispatch) => {
-    // console.log("Register payload",payload);
     dispatch(registerRequest())
     // return axios.post("https://reqres.in/api/login",payload)
-    return axios.post("https://unusual-sandals-dog.cyclic.app/user/register",payload)
+    return axios.post("https://shoesbackend.onrender.com/user/register",payload)
     .then((res) => {
-        // console.log("Register",res.data);
         dispatch(registerSuccess())
     })
     .catch((err) => dispatch(registerError()))
@@ -49,17 +47,14 @@ const loginError  = () => {
 }
 
 export const login  = (payload) => (dispatch) => {
-    console.log("login payload",payload);
+    // console.log("login payload",payload);
     dispatch(loginRequest())
-  return  axios.post("https://unusual-sandals-dog.cyclic.app/user/login",payload)
+  return  axios.post("https://shoesbackend.onrender.com/user/login",payload)
     .then((res) => {
-        console.log("login",res.data.data);
-        // Convert the user data object to a JSON string
+        // console.log("login",res.data.data);
         const userDataString = JSON.stringify(res.data.data);
 
         localStorage.setItem("userType", userDataString);
-        
-        // Check if the user is not an admin before storing the token
         if (res.data.data.usertype !== "admin") {
             localStorage.setItem("token", res.data.token);
             localStorage.removeItem("userType")
@@ -91,9 +86,9 @@ const getUsersError  = () => {
 export const getUsersData  = () => (dispatch) => {
     dispatch(getUsersRequest())
     // return axios.post("https://reqres.in/api/login",payload)
-  return  axios.get("https://unusual-sandals-dog.cyclic.app/user/get")
+  return  axios.get("https://shoesbackend.onrender.com/user/get")
     .then((res) => {
-        console.log("login",res.data.users);
+        // console.log("login",res.data.users);
         dispatch(getUsersSuccess(res.data.users))
     })
     .catch((err) => dispatch(getUsersError()))
@@ -117,11 +112,10 @@ const deleteUsersError  = () => {
 
 export const deleteUsersData  = (id) => (dispatch) => {
     dispatch(deleteUsersRequest())
-    // return axios.post("https://reqres.in/api/login",payload)
-  return  axios.delete(`https://unusual-sandals-dog.cyclic.app/user/delete/${id}`)
+  return  axios.delete(`https://shoesbackend.onrender.com/user/delete/${id}`)
     .then((res) => {
-        console.log("login",res.data.users);
-        // dispatch(deleteUsersSuccess(res))
+        // console.log("login",res.data.users);
+        dispatch(deleteUsersSuccess())
     })
     .catch((err) => dispatch(deleteUsersError()))
 }

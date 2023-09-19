@@ -26,7 +26,7 @@ const Home = () => {
         </Heading>
         <MultipleItems />
       </Box>
-      <Box mt={"5%"}>
+      <Box m={"5% 0"}>
         <Button class="button-71" role="button" onClick={() => navigate("/products")}>
           Show More Shoes
         </Button>

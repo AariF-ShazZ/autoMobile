@@ -9,7 +9,7 @@ import { Heading } from '@chakra-ui/react';
 import { deleteUsersData, getUsersData } from '../../../Redux/authReducer/actions';
 
 const Users = () => {
-    const usersData = useSelector((store) => store.authReducer.usersData)
+    const usersData = useSelector((store) => store.authReducer.usersData) || []
     console.log("usersData",usersData);
     const [search, setSearch] = useState('');
     const [orders, setOrders] = useState(usersData);
