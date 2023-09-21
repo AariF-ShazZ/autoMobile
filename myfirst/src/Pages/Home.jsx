@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
 import HomeSlider from "../Components/HomeSlider";
 import { Box, Button, Heading, useBreakpointValue } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../Redux/productReducer/actions';
 import { MultipleItems } from '../Components/ProductSlider';
 import { Link, useNavigate } from 'react-router-dom';
+import { getCartProducts } from '../Redux/cartReducer/actions';
 
 const Home = () => {
+  const cart = useSelector((store) => store.cartReducer.cart) || []
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (cart.length === 0) {
+      dispatch(getCartProducts())
+    }
+  }, [dispatch, cart]);
+
+
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
