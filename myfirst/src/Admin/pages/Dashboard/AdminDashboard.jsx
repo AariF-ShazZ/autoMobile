@@ -12,12 +12,14 @@ const AdminDashboard = () => {
   const allProducts = useSelector((store) => store.productsReducer.allProducts) || 0;
   const all_orders = useSelector((store) => store.cartReducer.orders) || [];
   const usersData = useSelector((store) => store.authReducer.usersData) || [];
-
+  console.log("all_orders",all_orders);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (allProducts === 0) {
+    console.log("useEffect");
+  },[])
+  useEffect(() => {
       dispatch(getAllProducts());
-    }
+    
     if (all_orders.length === 0) {
       dispatch(ordersGet());
     }

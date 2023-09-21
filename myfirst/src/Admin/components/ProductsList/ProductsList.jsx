@@ -23,9 +23,7 @@ const ProductsList = ({type}) => {
       const getProductParams = {
         params: {
           gender: searchParams.getAll("category"),
-          _sort: sortBy && "final_price",
-          _order: sortBy
-
+          sort: sortBy && sortBy
         }
       }
       dispatch(getProducts(page, getProductParams))

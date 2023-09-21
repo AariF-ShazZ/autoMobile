@@ -5,7 +5,6 @@ import Card from '../Components/Card';
 import { Box, Button, Flex, Grid, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import FilterCom from '../Components/FilterCom';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { Pagination } from "@mui/material"
 
 const Product = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -15,12 +14,7 @@ const Product = () => {
   const finalRef = React.useRef(null)
   const location = useLocation()
   const dispatch = useDispatch()
-  //   let pageSize = 10
-  //   const [currentPage, setCurrentPage] = useState({
-  //     count:0,
-  //     from:0,
-  //     to:pageSize
-  // })
+
   const [page, setPage] = useState(1)
 
   useEffect(() => {
@@ -36,33 +30,6 @@ const Product = () => {
     }
   }, [products.length, dispatch, location.search, page])
 
-
-  //   useEffect(() => {
-  //     service.getData({from:currentPage.from,to:currentPage.to}).then(res => {
-  //         // console.log(res);
-  //         setCurrentPage({...currentPage,count:res.count})
-  //         setProducts(res.data)
-  //     })
-  // },[books,currentPage.from,currentPage.to])
-
-  // const service = {
-  //     getData:({from,to}) => {
-  //         const data = books.slice(from,to)
-  //         return new Promise((res,rej) => {
-  //             res({
-  //                 count:books.length,
-  //                 data:data
-  //             })
-  //         })
-  //     }
-  // }
-
-  // const  hanldeChange = (e, page) => {
-  //  const from = (page - 1)  * pageSize
-  //  const to = (page - 1)  * pageSize+pageSize
-
-  //  setCurrentPage({...currentPage, from:from, to:to})
-  // }
   return (
     <>
       <Flex bg={""} display={{ base: { direction: "column" }, md: { direction: "column" }, lg: "flex" }}>
