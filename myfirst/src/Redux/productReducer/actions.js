@@ -47,7 +47,7 @@ const deleteProductsError = () => {
 
 export const deleteProduct = (id) => (dispatch) => {
     dispatch(deleteProductsRequest())
-    return axios.delete(`https://shoesbackend.onrender.com/product//delete/${id}`)
+    return axios.delete(`https://shoesbackend.onrender.com/product/delete/${id}`)
     .then((res) =>{  
         dispatch(deleteProductsSuccess())
     })
@@ -90,7 +90,7 @@ const singleProductRequest = () => {
 
 
 const singleProductSuccess = (payload) => {
-    console.log("single product",payload);
+    // console.log("single product",payload);
     return {
         type:types.SINGLE_PRODUCT_SUCCESS,
         payload

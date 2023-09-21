@@ -5,10 +5,11 @@ import { getSingleProducts } from '../Redux/productReducer/actions';
 import { Box, Button, Flex, HStack, Heading, Image, Text, VStack, useToast } from '@chakra-ui/react';
 import { BsFillHeartFill } from "react-icons/bs"
 import { addToCart, getCartProducts } from '../Redux/cartReducer/actions';
+
 const Details = () => {
   const singleData = useSelector((store) => store.productsReducer.singleProduct) || {};
   const cart = useSelector((store) => store.cartReducer.cart) || []
-  console.log("singleData", singleData);
+  // console.log("singleData", singleData);
   const { id } = useParams();
   const dispatch = useDispatch();
   const toast = useToast()
@@ -18,21 +19,17 @@ const Details = () => {
     }
   }, [dispatch, id]);
 
-
-
   useEffect(() => {
     if (cart.length === 0) {
       dispatch(getCartProducts())
     }
-  }, [dispatch, cart])
-
+  }, [dispatch, cart]);
 
   const images = singleData.images || [];
   const sizes = singleData.sizes || [];
   const gender = singleData.gender || '';
   const name = singleData.name || '';
   const finalPrice = singleData.final_price || 0;
-  // const rating = new Array(singleData.rating).fill(0) || []
   const [selectImage, setSelectImage] = useState("");
   const [size, setSize] = useState(null)
   useEffect(() => {
@@ -43,7 +40,17 @@ const Details = () => {
     let payload = {
       ...singleData, size
     }
-    // console.log("cart payload size=>", payload)
+     // _id: singleData._id,
+      // name: singleData.name,
+      // color: singleData.color,
+      // gender: singleData.gender,
+      // original_price: singleData.original_price,
+      // final_price:singleData.final_price,
+      // images: singleData.images,
+      // size,
+      // reviews:singleData,
+      // rating: 2
+    console.log("cart payload size=>", size, payload)
     dispatch(addToCart(payload))
       .then((res) => {
         dispatch(getCartProducts())
@@ -57,6 +64,7 @@ const Details = () => {
       })
       .catch((err) => console.log("Error Cart Post"))
   }
+
   return (
     <>
       <Box w="100%" bg="" p="4% 2%">

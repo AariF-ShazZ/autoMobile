@@ -10,7 +10,7 @@ import { deleteUsersData, getUsersData } from '../../../Redux/authReducer/action
 
 const Users = () => {
     const usersData = useSelector((store) => store.authReducer.usersData) || []
-    console.log("usersData",usersData);
+    // console.log("usersData",usersData);
     const [search, setSearch] = useState('');
     const [orders, setOrders] = useState(usersData);
     const [page, setPage] = useState(1);

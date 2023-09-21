@@ -18,16 +18,24 @@ export const addToCartError = () => {
 }
 
 export const addToCart = (payload) => (dispatch) => {
-
-    dispatch(addToCartRequest())
-    return axios.post(`https://shoesbackend.onrender.com/cart/create`,payload,  {
-        headers: {
-        'Authorization': `${localStorage.getItem("token")}`, 
-      }})
-    .then((res) =>{
-        dispatch(addToCartSuccess())
-    } ).catch((err) => dispatch(addToCartError()))
-}
+    console.log("cart payload",payload);
+      dispatch(addToCartRequest());
+     return axios.post(
+        'https://shoesbackend.onrender.com/cart/create',
+        payload,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('token')}`,
+          },
+        }
+      ).then((res) => {
+        console.log('add to cart', res.data.data);
+        dispatch(addToCartSuccess());
+      }).catch ((error) => {
+        console.error('Error adding to cart:', error);
+        dispatch(addToCartError());
+      }) 
+  };
 
 
 export const getCartProductsRequest = () => {
@@ -79,13 +87,14 @@ export const delteteCartProductError = () => {
 }
 
 export const deleteCartProduct = (id) => (dispatch) => {
-
+console.log("deleted",id);
     dispatch(getCartProductsRequest())
     return axios.delete(`https://shoesbackend.onrender.com/cart/delete/${id}`, {
         headers: {
         'Authorization': `${localStorage.getItem("token")}`, 
       }})
     .then((res) =>{
+        console.log("delete cart products",res);
         dispatch(getCartProductsSuccess(res.data.data))
     } ).catch((err) => dispatch(getCartProductsError()))
 }

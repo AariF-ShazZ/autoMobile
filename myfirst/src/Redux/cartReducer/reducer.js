@@ -15,7 +15,7 @@ export const cartReducer = (state=initialState,{type,payload}) =>{
     }
     case types.ADD_TO_CART_SUCCESS:{   
         return {
-            ...state,cart:payload,isLoadingCart:false,isErrorCart:false
+            ...state,isLoadingCart:false,isErrorCart:false
         }
     }
     case types.ADD_TO_CART_ERROR:{   

@@ -95,10 +95,6 @@ export default function Navbar() {
         }
     }, [dispatch, cart]);
 
-    const getCartProductsData = () => {
-        dispatch(getCartProducts());
-    };
-
     const handleSubmit = () => {
         dispatch(query)
             .then((res) => navigate("/products"))
@@ -334,7 +330,10 @@ export default function Navbar() {
                                         </Flex>
                                     </Flex>
                                     <DrawerFooter>
-                                        <Button colorScheme='#ff0000' bg="#ff0000" color={"#fff"} onClick={() => navigate("/checkout")} isDisabled={cart.length === 0}>{cart.length > 0 ? "Checkout" : "First Choose Products"}</Button>
+                                        <Button colorScheme='#ff0000' bg="#ff0000" color={"#fff"} onClick={() =>{ 
+                                            navigate("/checkout")
+                                            setCartDrawerIsOpen(false);
+                                            }} isDisabled={cart.length === 0}>{cart.length > 0 ? "Checkout" : "First Choose Products"}</Button>
                                     </DrawerFooter>
                                 </DrawerContent>
                             </Drawer>
@@ -367,7 +366,10 @@ export default function Navbar() {
                                     <MenuItem>Authentication</MenuItem>
                                 </Link>
                                 <MenuDivider />
-                                <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+                                <MenuItem onClick={() =>{
+                                     handleLogout()
+                                     window.location.reload()
+                                     }}>Logout</MenuItem>
                             </MenuList>
                         </Menu>
                     </Flex>

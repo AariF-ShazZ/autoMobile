@@ -227,11 +227,8 @@ import {
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteCartProduct } from '../Redux/cartReducer/actions'
-import { getSingleProducts } from '../Redux/productReducer/actions'
+import { deleteProduct, getSingleProducts } from '../Redux/productReducer/actions'
 import ProductsUpdate from '../Admin/components/ProductUpdate/ProductUpdate'
-// import ProductUpdate from './ProductUpdate/ProductUpdate'
-// import { deleteProduct, getSingleProducts } from '../../Redux/productReducer/actions'
 
 export default function Card(props) {
     // console.log("card =>", props);
@@ -240,16 +237,14 @@ export default function Card(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const dispatch = useDispatch()
 
-    const [editModalIsOpen, setEditModalIsOpen] = useState(false); // New state variable for the Edit modal
-
-    // ... other code
+    const [editModalIsOpen, setEditModalIsOpen] = useState(false); 
 
     const openEditModal = () => {
-        setEditModalIsOpen(true); // Open the Edit modal when the button is clicked
+        setEditModalIsOpen(true); 
     };
 
     const closeEditModal = () => {
-        setEditModalIsOpen(false); // Close the Edit modal
+        setEditModalIsOpen(false); 
     };
     const toast = useToast();
     const showSecondImage = () => {
@@ -260,7 +255,7 @@ export default function Card(props) {
     }
 
     const deleteItem = (id) => {
-        dispatch(deleteCartProduct(id))
+        dispatch(deleteProduct(id))
             .then((res) => {
                 console.log("res card", res);    
                 toast({
@@ -270,6 +265,8 @@ export default function Card(props) {
                     duration: 2000,
                     isClosable: true,
                 })
+                onClose(); // Close the modal
+                window.location.reload()
             })
             .catch((err) => {
                 toast({
