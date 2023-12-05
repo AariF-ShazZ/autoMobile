@@ -21,6 +21,7 @@ import LargeWithLogoLeft from '../Components/Footer';
 import SideBar from '../Admin/components/Sidebar';
 import sidebar_menu from '../Admin/constants/sidebar-menu';
 import AdminDashboard from '../Admin/pages/Dashboard/AdminDashboard';
+import Cancel from '../Pages/Cancel';
 
 export const AllRoutes = () => {
   const [value, setValue] = useState(localStorage.getItem("pageValue") || "user");
@@ -59,6 +60,7 @@ export const AllRoutes = () => {
             <Route path='/checkout' element={<CheckoutPage />} />
             <Route path='/login' element={<Authentication />} />
             <Route path='/success' element={<Success />} />
+            <Route path='/cancel' element={<Cancel />} />
             <Route path="*" element={<div></div>} />
           </Routes>
           <LargeWithLogoLeft />

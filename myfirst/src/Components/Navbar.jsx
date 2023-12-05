@@ -64,7 +64,7 @@ import {
 import { logout } from "../Redux/authReducer/actions";
 import { RiAdminFill } from "react-icons/ri";
 import { AiOutlineHome } from "react-icons/ai";
-
+import { loadStripe } from '@stripe/stripe-js';
 
 export default function Navbar() {
     const cart = useSelector((store) => store.cartReducer.cart) || [];
@@ -215,6 +215,38 @@ export default function Navbar() {
         navigate("/login");
     };
 
+    const makePayment = async () => {
+        console.log("makepayment");
+        const stripe = await loadStripe("pk_test_51OJZ8gSDd29kDZwrqkfyzwAVCOFtNlfxZ8vPMmyzlxDHlpRsdS7KV4DS4WxjD7dSB4iOGH96FDq5fO7wHfgiklZi00qx7y4kD9")
+        const body = {
+            products: cart
+        }
+
+        const headers = {
+            "Content-Type": "application/json"
+        }
+
+        // const response = await fetch("http://localhost:8000/api/create-checkout-session", {
+        //     method: "POST",
+        //     headers: headers,
+        //     body: JSON.stringify(body)
+        // })
+        const response = await fetch("https://shoesbackend.onrender.com/api/create-checkout-session", {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(body)
+        })
+
+        const session = await response.json()
+        const result = stripe.redirectToCheckout({
+            sessionId: session.id
+        })
+
+        if (result.error) {
+            console.log(result.error);
+        }
+    }
+
     return (
         <>
             <Box bg={bgColor} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>
@@ -295,14 +327,19 @@ export default function Navbar() {
                                         {cart.length && cart.length > 0 ? (
                                             cart.map((item) => {
                                                 return (
-                                                    <Flex key={item._id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.500"}>
-                                                        <Image boxSize={"75px"} src={item.images[0]} alt="shoe" mr={"3%"} />
+                                                    <Flex key={item._id} boxShadow={"rgba(0, 0, 0, 0.35) 0px 5px 15px"} m="1" mb="7" p="2" bg={"gray.300"}>
                                                         <Box>
                                                             <Flex justifyContent={"space-between"} align="center">
-                                                                <Text fontSize={"13px"}>{`${item.name} | ${item.color} | ${item.gender}`}</Text>
-                                                                <Icon boxSize={5} ml="5" as={RxCross2} onClick={() => handleRemove(item._id)} cursor={"pointer"} />
+                                                                <Image boxSize={"75px"} src={item.images[0]} alt="shoe" mr={"3%"} />
+                                                                <Flex direction={"column"} gap={"20px"} mt={"-20px"}>
+                                                                    <Flex>
+                                                                        <Text fontSize={"13px"}>{`${item.name} | ${item.color} | ${item.gender}`}</Text>
+                                                                        <Icon boxSize={5} ml="5" as={RxCross2} onClick={() => handleRemove(item._id)} cursor={"pointer"} />
+                                                                    </Flex>
+                                                                    <Text as="sup" fontSize={"15px"}>{item.size}</Text>
+                                                                </Flex>
+
                                                             </Flex>
-                                                            <Text as="sup">{item.size}</Text>
                                                             <Flex border={""} w={"100%"} align="center" justifyContent={"space-between"}>
                                                                 <Flex bg={""} w={"150px"} align={"center"} justify={"space-evenly"}>
                                                                     <Button colorScheme="red" bg={"red"} color={"#fff"} onClick={() => handleDecrease(item)}>-</Button>
@@ -330,10 +367,11 @@ export default function Navbar() {
                                         </Flex>
                                     </Flex>
                                     <DrawerFooter>
-                                        <Button colorScheme='#ff0000' bg="#ff0000" color={"#fff"} onClick={() =>{ 
-                                            navigate("/checkout")
+                                        <Button colorScheme='#ff0000' bg="#ff0000" color={"#fff"} onClick={() => {
+                                            // navigate("/checkout")
+                                            makePayment()
                                             setCartDrawerIsOpen(false);
-                                            }} isDisabled={cart.length === 0}>{cart.length > 0 ? "Checkout" : "First Choose Products"}</Button>
+                                        }} isDisabled={cart.length === 0}>{cart.length > 0 ? "Checkout" : "First Choose Products"}</Button>
                                     </DrawerFooter>
                                 </DrawerContent>
                             </Drawer>
@@ -359,17 +397,17 @@ export default function Navbar() {
                                     localStorage.setItem("pageValue", "admin")
                                     navigate("/admin/dashboard")
                                     window.location.reload();
-                                }} color={"red"} bg={"red"} colorScheme="red"  cursor={"pointer"}/>
+                                }} color={"red"} bg={"red"} colorScheme="red" cursor={"pointer"} />
                             )}
                             <MenuList>
                                 <Link to={"/login"}>
                                     <MenuItem>Authentication</MenuItem>
                                 </Link>
                                 <MenuDivider />
-                                <MenuItem onClick={() =>{
-                                     handleLogout()
-                                     window.location.reload()
-                                     }}>Logout</MenuItem>
+                                <MenuItem onClick={() => {
+                                    handleLogout()
+                                    window.location.reload()
+                                }}>Logout</MenuItem>
                             </MenuList>
                         </Menu>
                     </Flex>
@@ -421,10 +459,10 @@ export default function Navbar() {
                         <Box h={"400px"} w={"95%"} bg={""} mt={"4%"} p={"5% 0%"}>
                             <Box>
                                 <UnorderedList listStyleType={"none"} fontSize={"25px"} mb={"3%"} ml={"-0%"} bg={""} p={"4%"} >
-                                    <ListItem p={"2% 3%"}  color={"red"} _hover={{bg:"red",color:"white"}} m={"8% 0"}  >
+                                    <ListItem p={"2% 3%"} color={"red"} _hover={{ bg: "red", color: "white" }} m={"8% 0"}  >
                                         <Link to={"/"} onClick={() => {
                                             setMobileDrawerIsOpen(false)
-                        
+
                                         }
                                         }>
                                             <Text>
@@ -432,17 +470,17 @@ export default function Navbar() {
                                             </Text>
                                         </Link>
                                     </ListItem>
-                                    <ListItem m={"8% 0"} p={"2% 3%"}  color={"red"} _hover={{bg:"red",color:"white"}}>
+                                    <ListItem m={"8% 0"} p={"2% 3%"} color={"red"} _hover={{ bg: "red", color: "white" }}>
                                         <Link to={"/products"} onClick={() => {
                                             setMobileDrawerIsOpen(false)
                                         }
                                         }>
                                             <Text>
-                                            Products
+                                                Products
                                             </Text>
                                         </Link>
                                     </ListItem>
-                                    <ListItem  m={"8% 0"} p={"2% 3%"}  color={"red"} _hover={{bg:"red",color:"white"}}> 
+                                    <ListItem m={"8% 0"} p={"2% 3%"} color={"red"} _hover={{ bg: "red", color: "white" }}>
                                         <Link onClick={() => {
                                             setMobileDrawerIsOpen(false)
                                             openCartDrawer()

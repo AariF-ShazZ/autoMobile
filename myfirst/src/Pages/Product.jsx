@@ -8,7 +8,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 
 const Product = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const products = useSelector((store) => store.productsReducer.products)
+  const products = useSelector((store) => store.productsReducer.products) || []
   console.log("products => ", products);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const finalRef = React.useRef(null)
