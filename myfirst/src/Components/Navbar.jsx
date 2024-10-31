@@ -60,14 +60,16 @@ import {
     deleteCartProduct,
     getCartProducts,
     increaseCartQuantity,
+    orderPost,
 } from "../Redux/cartReducer/actions";
-import { logout } from "../Redux/authReducer/actions";
+import { getUsersData, logout } from "../Redux/authReducer/actions";
 import { RiAdminFill } from "react-icons/ri";
 import { AiOutlineHome } from "react-icons/ai";
 import { loadStripe } from '@stripe/stripe-js';
 
 export default function Navbar() {
     const cart = useSelector((store) => store.cartReducer.cart) || [];
+    const usersData = useSelector((store) => store.authReducer.usersData) || []
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [mobileDrawerIsOpen, setMobileDrawerIsOpen] = useState(false);
     const btnRef = useRef();
@@ -95,6 +97,11 @@ export default function Navbar() {
         }
     }, [dispatch, cart]);
 
+    useEffect(() => {
+        if (usersData.length === 0) {
+          dispatch(getUsersData())
+        }
+      }, [dispatch, usersData])
     const handleSubmit = () => {
         dispatch(query)
             .then((res) => navigate("/products"))
@@ -210,10 +217,21 @@ export default function Navbar() {
             total_final_price += convertToNumber(prod.final_price) * prod.qty;
         });
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate("/login");
-    };
+        let userDetails = null;
+
+  if (cart.length > 0) {
+    const user = usersData.find((item) => item._id === cart[0]?.userID);
+    if (user) {
+      userDetails = user;
+    }
+  }
+  console.log("userDetails", userDetails);
+  const payload = {
+    userID: userDetails?._id,
+    username: userDetails?.username,
+    totalProducts: cart.length,
+    amount: total_final_price,
+  }
 
     const makePayment = async () => {
         console.log("makepayment");
@@ -226,11 +244,6 @@ export default function Navbar() {
             "Content-Type": "application/json"
         }
 
-        // const response = await fetch("http://localhost:8000/api/create-checkout-session", {
-        //     method: "POST",
-        //     headers: headers,
-        //     body: JSON.stringify(body)
-        // })
         const response = await fetch("https://shoesbackend.onrender.com/api/create-checkout-session", {
             method: "POST",
             headers: headers,
@@ -244,9 +257,15 @@ export default function Navbar() {
 
         if (result.error) {
             console.log(result.error);
+        }else {
+            dispatch(orderPost(payload))
         }
     }
 
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate("/login");
+    };
     return (
         <>
             <Box bg={bgColor} position={"sticky"} zIndex={"10"} top={"0"} px={4} pt={"10px"} pb={"16px"}>

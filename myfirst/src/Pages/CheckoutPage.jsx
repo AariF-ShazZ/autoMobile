@@ -42,15 +42,7 @@ import { getCartProducts } from "../Redux/cartReducer/actions";
 import { getUsersData } from "../Redux/authReducer/actions";
 import Form from "../Components/Checkout/Form";
 import { orderPost } from "../Redux/cartReducer/actions";
-function BackdropExample() {
 
-
-  return (
-    <>
-
-    </>
-  );
-}
 export const CheckoutPage = () => {
   const cart = useSelector((store) => store.cartReducer.cart) || []
   // console.log("checkout  page",cart);
